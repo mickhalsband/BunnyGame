@@ -1,0 +1,78 @@
+#/usr/bin/env python
+
+"""
+The rabbit class
+"""
+
+import os, pygame, math
+from pygame.locals import *
+import utils
+
+FLOOR_Y = 300
+
+class Rabbit(pygame.sprite.Sprite):
+	"""moves a rabbit critter across the screen. it can spin the
+	   rabbit when it is punched."""
+	def __init__(self):
+		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
+		self.image, self.rect = utils.load_image('rabbit.png', -1)
+		screen = pygame.display.get_surface()
+		self.area = screen.get_rect()
+		self.rect.width = 10
+		self.rect.height = 10
+		self.rect.topleft = 10, FLOOR_Y
+		self.step = 3
+		self.direction = utils.Direction.right
+		self.v_x = 0 
+		self.v_y = 0
+
+	def update(self):
+		"walk or jump depending on state"
+		if (self.v_x == 0 and self.v_y == 0 and self.rect.bottom > FLOOR_Y):
+			self.rect.bottom = FLOOR_Y
+			self.v_y = 0
+			return
+		
+			
+		#print "v_x, v_y", self.v_x, self.v_y
+
+		dt = 1
+		dx = 0
+		dy = 0
+		if (1):#(self.v_y != 0):
+			# dx = v0*dt + accel*dt*0.5
+			a_y = 1
+			self.v_y = self.v_y + a_y*math.pow(dt,2)
+			dy = self.v_y*dt
+
+		if (1):#(self.v_x != 0):
+			# dx = v0*dt + accel*dt*0.5
+			a_x = 0
+			self.v_x = self.v_x + a_x*math.pow(dt,2)
+			dx = self.v_x*dt
+			
+		#print "dx, dy", dx, dy
+	
+		
+		self.rect = self.rect.move((dx, dy))
+		#print self.rect.bottom
+
+		if (self.rect.bottom > FLOOR_Y):
+			self.rect.bottom = FLOOR_Y 
+			self.v_y = 0
+	
+	def start_move(self, direction):
+		if (direction != self.direction):
+			#flip image and step
+			self.direction = direction
+			self.image = pygame.transform.flip(self.image, 1, 0)
+			self.step = self.step * -1;
+			
+		self.v_x = self.step
+
+	def stop_move(self, direction):
+		self.v_x = 0
+		
+	def start_jump(self):
+	# kick rabbit with initial speed (negative val = upwards)
+		self.v_y = -10
