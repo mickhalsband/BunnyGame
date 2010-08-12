@@ -39,13 +39,12 @@ class Rabbit(pygame.sprite.Sprite):
 		if (self.v_x == 0 and self.v_y == 0 and self.rect.bottom > FLOOR_Y):
 			self.init_y()
 			return
-		
-			
-		#print "v_x, v_y", self.v_x, self.v_y
 
 		dt = 1
 		dx = 0
 		dy = 0
+
+		# needs optimizations badly!
 		if (1):#(self.v_y != 0):
 			# dx = v0*dt + accel*dt*0.5
 			a_y = 1
@@ -57,12 +56,8 @@ class Rabbit(pygame.sprite.Sprite):
 			a_x = 0
 			self.v_x = self.v_x + a_x*math.pow(dt,2)
 			dx = self.v_x*dt
-			
-		#print "dx, dy", dx, dy
-	
-		
+				
 		self.rect = self.rect.move((dx, dy))
-		#print self.rect.bottom
 
 		if (self.rect.bottom > FLOOR_Y):
 			self.init_y()
