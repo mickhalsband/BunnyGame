@@ -9,6 +9,7 @@ from pygame.locals import *
 import utils
 
 FLOOR_Y = 300
+JUMP_SPEED = 10
 
 class Rabbit(pygame.sprite.Sprite):
 	"""moves a rabbit critter across the screen. it can spin the
@@ -25,12 +26,17 @@ class Rabbit(pygame.sprite.Sprite):
 		self.direction = utils.Direction.right
 		self.v_x = 0 
 		self.v_y = 0
+		self.jumping = 0
+
+	def init_y(self):
+		self.rect.bottom = FLOOR_Y
+		self.v_y = 0
+		self.jumping = 0		
 
 	def update(self):
 		"walk or jump depending on state"
 		if (self.v_x == 0 and self.v_y == 0 and self.rect.bottom > FLOOR_Y):
-			self.rect.bottom = FLOOR_Y
-			self.v_y = 0
+			self.init_y()
 			return
 		
 			
@@ -58,8 +64,7 @@ class Rabbit(pygame.sprite.Sprite):
 		#print self.rect.bottom
 
 		if (self.rect.bottom > FLOOR_Y):
-			self.rect.bottom = FLOOR_Y 
-			self.v_y = 0
+			self.init_y()
 	
 	def start_move(self, direction):
 		if (direction != self.direction):
@@ -74,5 +79,10 @@ class Rabbit(pygame.sprite.Sprite):
 		self.v_x = 0
 		
 	def start_jump(self):
-	# kick rabbit with initial speed (negative val = upwards)
-		self.v_y = -10
+		if (self.jumping == 1):
+			# don't double jump
+			return
+		self.jumping = 1	
+
+		# kick rabbit with initial speed (negative val = upwards)
+		self.v_y = -1 * JUMP_SPEED
