@@ -10,6 +10,7 @@ import utils
 
 FLOOR_Y = 300
 JUMP_SPEED = 10
+WALK_SPEED = 1.5
 
 class Rabbit(pygame.sprite.Sprite):
 	"""moves a rabbit critter across the screen. it can spin the
@@ -66,16 +67,17 @@ class Rabbit(pygame.sprite.Sprite):
 		if (self.rect.bottom > FLOOR_Y):
 			self.init_y()
 	
-	def start_move(self, direction):
+	def start_walk(self, direction):
 		if (direction != self.direction):
 			#flip image and step
 			self.direction = direction
 			self.image = pygame.transform.flip(self.image, 1, 0)
 			self.step = self.step * -1;
 			
-		self.v_x = self.step
+		self.v_x = self.step * WALK_SPEED
 
-	def stop_move(self, direction):
+	# called when keypress ends
+	def stop_walk(self, direction):
 		self.v_x = 0
 		
 	def start_jump(self):

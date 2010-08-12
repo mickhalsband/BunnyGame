@@ -59,9 +59,9 @@ def main():
 				return
 			# key_to_dir(event.key) != 0 for valid keys
 			elif event.type == KEYDOWN and utils.key_to_dir(event.key) != 0:
-				rabbit_sprite.start_move(utils.key_to_dir(event.key));
+				rabbit_sprite.start_walk(utils.key_to_dir(event.key));
 			elif event.type == KEYUP and utils.key_to_dir(event.key) != 0:
-				rabbit_sprite.stop_move(utils.key_to_dir(event.key));
+				rabbit_sprite.stop_walk(utils.key_to_dir(event.key));
 			elif event.type == KEYDOWN and event.key == K_SPACE:
 				rabbit_sprite.start_jump();
 		allsprites.update()
