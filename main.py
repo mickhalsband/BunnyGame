@@ -12,6 +12,7 @@ import os, pygame
 from pygame.locals import *
 import rabbit, utils
 import pymunk
+import math, random
 
 
 if not pygame.font: print('Warning, fonts disabled')
@@ -77,7 +78,7 @@ class Game:
 ###        
 			ticks_to_next_ball -= 1
 			if ticks_to_next_ball <= 0:
-				ticks_to_next_ball = 25
+				ticks_to_next_ball = 5
 				ball_shape = self.add_ball(self.space)
 				balls.append(ball_shape)
 
@@ -92,18 +93,19 @@ class Game:
 
 	def add_ball(self, space):
 		mass = 1
-		radius = 14
-		inertia = pymunk.moment_for_circle(mass, 0, radius) # 1
-		body = pymunk.Body(mass, inertia) # 2
-		x = self.rabbit_sprite.rect.x
-		body.position = x, 550 # 3
-		shape = pymunk.Circle(body, radius) # 4
-		self.space.add(body, shape) # 5
+		radius = 2
+		inertia = pymunk.moment_for_circle(mass, 0, radius) 
+		body = pymunk.Body(mass, inertia)
+		x = self.rabbit_sprite.rect.center[0]; #x is bunny center
+		x = random.randint(x-25,x+25) #randomize x
+		body.position = x, 550 
+		shape = pymunk.Circle(body, radius)
+		self.space.add(body, shape)
 		return shape
 
 	def draw_ball(self, screen, ball):
 		p = int(ball.body.position.x), 600-int(ball.body.position.y)
-		pygame.draw.circle(screen, Color(0,0,1), p, int(ball.radius), 2)
+		pygame.draw.circle(screen, Color(0,0,255), p, int(ball.radius), 2)
 
 	def main(self):
 		"""this function is called when the program starts.
