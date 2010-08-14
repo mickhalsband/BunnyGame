@@ -11,15 +11,7 @@ follow along in the tutorial.
 import os, pygame
 from pygame.locals import *
 import rabbit, utils
-
-#from pygame.color import *
-#import pymunk as pm
-#from pymunk import Vec2d
-#import math
-#X,Y = 0,1
-#### Physics collision types
-#COLLTYPE_DEFAULT = 0
-#COLLTYPE_MOUSE = 1
+import pymunk
 
 
 if not pygame.font: print('Warning, fonts disabled')
@@ -27,33 +19,7 @@ if not pygame.mixer: print('Warning, sound disabled')
 
 class Game:
 
-	def do_main_loop(self):
-		#Main Loop
-		while 1:
-			self.clock.tick(60)
-
-			#Handle Input Events
-			for event in pygame.event.get():
-				if event.type == QUIT:
-					return
-				# key_to_dir(event.key) != 0 for valid keys
-				elif event.type == KEYDOWN and utils.key_to_dir(event.key) != 0:
-					self.rabbit_sprite.start_walk(utils.key_to_dir(event.key));
-				elif event.type == KEYUP and utils.key_to_dir(event.key) != 0:
-					self.rabbit_sprite.stop_walk(utils.key_to_dir(event.key));
-				elif event.type == KEYDOWN and event.key == K_SPACE:
-					self.rabbit_sprite.start_jump();
-			self.allsprites.update()
-
-			#Draw Everything
-			self.screen.blit(self.background, (0, 0))
-			self.allsprites.draw(self.screen)
-			pygame.display.flip()
-
-	def main(self):
-		"""this function is called when the program starts.
-		   it initializes everything it needs, then runs in
-		   a loop until the function returns."""
+	def init_game(self):
 		#Initialize Everything
 		pygame.init()
 		self.screen = pygame.display.set_mode((800,600))
@@ -83,6 +49,71 @@ class Game:
 		self.rabbit_sprite = rabbit.Rabbit()
 		#	bird = Bird()
 		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite))
+
+	def do_main_loop(self):
+		#Main Loop
+		balls = []
+		ticks_to_next_ball = 10
+		while 1:
+			self.clock.tick(60)
+
+			#Handle Input Events
+			for event in pygame.event.get():
+				if event.type == QUIT:
+					return
+				# key_to_dir(event.key) != 0 for valid keys
+				elif event.type == KEYDOWN and utils.key_to_dir(event.key) != 0:
+					self.rabbit_sprite.start_walk(utils.key_to_dir(event.key));
+				elif event.type == KEYUP and utils.key_to_dir(event.key) != 0:
+					self.rabbit_sprite.stop_walk(utils.key_to_dir(event.key));
+				elif event.type == KEYDOWN and event.key == K_SPACE:
+					self.rabbit_sprite.start_jump();
+			self.allsprites.update()
+
+			#Draw Everything
+			self.screen.blit(self.background, (0, 0))
+			self.allsprites.draw(self.screen)
+
+###        
+			ticks_to_next_ball -= 1
+			if ticks_to_next_ball <= 0:
+				ticks_to_next_ball = 25
+				ball_shape = self.add_ball(self.space)
+				balls.append(ball_shape)
+
+			for ball in balls:
+				self.draw_ball(self.screen, ball)
+
+			# Physics step
+			self.space.step(1/50.0)
+
+			pygame.display.flip()
+
+
+	def add_ball(self, space):
+		mass = 1
+		radius = 14
+		inertia = pymunk.moment_for_circle(mass, 0, radius) # 1
+		body = pymunk.Body(mass, inertia) # 2
+		x = self.rabbit_sprite.rect.x
+		body.position = x, 550 # 3
+		shape = pymunk.Circle(body, radius) # 4
+		self.space.add(body, shape) # 5
+		return shape
+
+	def draw_ball(self, screen, ball):
+		p = int(ball.body.position.x), 600-int(ball.body.position.y)
+		pygame.draw.circle(screen, Color(0,0,1), p, int(ball.radius), 2)
+
+	def main(self):
+		"""this function is called when the program starts.
+		   it initializes everything it needs, then runs in
+		   a loop until the function returns."""
+		self.init_game()
+
+		pymunk.init_pymunk()
+		self.space = pymunk.Space()
+		self.space.gravity = (0.0, -900.0)
 
 		self.do_main_loop()
 
