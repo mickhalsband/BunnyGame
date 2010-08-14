@@ -13,10 +13,16 @@ from pygame.locals import *
 import rabbit, utils
 import pymunk
 import math, random
+from pymunk import Vec2d
 
 
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
+
+
+def flipy(y):
+    """Small hack to convert chipmunk physics to pygame coordinates"""
+    return -y+600
 
 class Game:
 
@@ -51,17 +57,39 @@ class Game:
 		#	bird = Bird()
 		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite))
 
+		# PHYSICS STUFF
+		#pymunk.init_pymunk()
+		self.space = pymunk.Space()
+		self.space.gravity = (0.0, -900.0)
+
+		line_point1 = Vec2d(30 , flipy(350))        
+		line_point2 = Vec2d(600, flipy(350))
+		body = pymunk.Body(pymunk.inf, pymunk.inf)
+		line= pymunk.Segment(body, line_point1, line_point2, 0.0)
+		line.friction = 0.99
+		self.space.add_static(line)
+
+		body = line.body
+		pv1 = body.position + line.a.rotated(body.angle)
+		pv2 = body.position + line.b.rotated(body.angle)
+		self.p1 = pv1.x, flipy(pv1.y)
+		self.p2 = pv2.x, flipy(pv2.y)
+		pygame.draw.lines(self.screen, 0, False, [self.p1,self.p2])
+
 	def do_main_loop(self):
 		#Main Loop
 		balls = []
 		ticks_to_next_ball = 10
-		while 1:
+		running = True
+		while running:
 			self.clock.tick(60)
 
 			#Handle Input Events
 			for event in pygame.event.get():
 				if event.type == QUIT:
-					return
+					running = False
+				elif event.type == KEYDOWN and event.key == K_ESCAPE:
+					running = False
 				# key_to_dir(event.key) != 0 for valid keys
 				elif event.type == KEYDOWN and utils.key_to_dir(event.key) != 0:
 					self.rabbit_sprite.start_walk(utils.key_to_dir(event.key));
@@ -84,6 +112,9 @@ class Game:
 
 			for ball in balls:
 				self.draw_ball(self.screen, ball)
+
+			pygame.draw.lines(self.screen, Color(0,255,0), False, [self.p1,self.p2])
+
 
 			# Physics step
 			self.space.step(1/50.0)
@@ -111,11 +142,8 @@ class Game:
 		"""this function is called when the program starts.
 		   it initializes everything it needs, then runs in
 		   a loop until the function returns."""
-		self.init_game()
 
-		pymunk.init_pymunk()
-		self.space = pymunk.Space()
-		self.space.gravity = (0.0, -900.0)
+		self.init_game()
 
 		self.do_main_loop()
 
