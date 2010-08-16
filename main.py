@@ -1,4 +1,5 @@
-﻿#/usr/bin/env python
+#!/usr/bin/env python
+
 """
 This simple example is used for the line-by-line tutorial
 that comes with pygame. It is based on a 'popular' web banner.
@@ -6,13 +7,24 @@ Note there are comments here, but for the full explanation,
 follow along in the tutorial.
 """
 
-
 #Import Modules
-import os, pygame
-from pygame.locals import *
-import rabbit, utils
+import os
+import sys
+# Added for linux server
+# Adds server folders to PYTHONPATH 
+# ========================================
+basedir = os.path.normpath(os.path.join(os.path.dirname(sys.argv[0]), '..'))
+sys.path.append(basedir)
+# end of linux part
+# ========================================
+
+import pygame
+import rabbit
+import utils
 import pymunk
-import math, random
+import math
+import random
+from pygame.locals import *
 from pymunk import Vec2d
 
 
@@ -30,7 +42,7 @@ class Game:
 		#Initialize Everything
 		pygame.init()
 		self.screen = pygame.display.set_mode((800,600))
-		pygame.display.set_caption('rabbit_sprite Fever')
+		pygame.display.set_caption('Rainy Bunny by Mick v0.1')
 		pygame.mouse.set_visible(0)
 
 		#Create The Backgound
@@ -41,7 +53,7 @@ class Game:
 		#Put Text On The Background, Centered
 		if pygame.font:
 			font = pygame.font.Font(None, 36)
-			text = font.render("My Game", 1, (10, 10, 10))
+			text = font.render("Rainy Bunny", 1, (10, 10, 10))
 			textpos = text.get_rect(centerx=self.background.get_width()/2)
 			self.background.blit(text, textpos)
 
@@ -113,7 +125,7 @@ class Game:
 			for ball in balls:
 				self.draw_ball(self.screen, ball)
 
-			pygame.draw.lines(self.screen, Color(0,255,0), False, [self.p1,self.p2])
+			#pygame.draw.lines(self.screen, Color(0,255,0), False, [self.p1,self.p2])
 
 
 			# Physics step
