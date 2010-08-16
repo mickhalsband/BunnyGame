@@ -90,8 +90,8 @@ class Game:
 
 	def do_main_loop(self):
 		#Main Loop
-		balls = []
-		ticks_to_next_ball = 10
+		raindrops = []
+		ticks_to_next_raindrop = 10
 		running = True
 		while running:
 			self.clock.tick(60)
@@ -116,14 +116,14 @@ class Game:
 			self.allsprites.draw(self.screen)
 
 ###        
-			ticks_to_next_ball -= 1
-			if ticks_to_next_ball <= 0:
-				ticks_to_next_ball = 5
-				ball_shape = self.add_ball(self.space)
-				balls.append(ball_shape)
+			ticks_to_next_raindrop -= 1
+			if ticks_to_next_raindrop <= 0:
+				ticks_to_next_raindrop = 5
+				raindrop = self.add_raindrop(self.space)
+				raindrops.append(raindrop)
 
-			for ball in balls:
-				self.draw_ball(self.screen, ball)
+			for raindrop in raindrops:
+				self.draw_raindrop(self.screen, raindrop)
 
 			#pygame.draw.lines(self.screen, Color(0,255,0), False, [self.p1,self.p2])
 
@@ -134,7 +134,7 @@ class Game:
 			pygame.display.flip()
 
 
-	def add_ball(self, space):
+	def add_raindrop(self, space):
 		mass = 1
 		radius = 2
 		inertia = pymunk.moment_for_circle(mass, 0, radius) 
@@ -146,7 +146,7 @@ class Game:
 		self.space.add(body, shape)
 		return shape
 
-	def draw_ball(self, screen, ball):
+	def draw_raindrop(self, screen, ball):
 		p = int(ball.body.position.x), 600-int(ball.body.position.y)
 		pygame.draw.circle(screen, Color(0,0,255), p, int(ball.radius), 2)
 
