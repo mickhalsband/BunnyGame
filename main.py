@@ -36,6 +36,23 @@ def flipy(y):
     """Small hack to convert chipmunk physics to pygame coordinates"""
     return -y+600
 
+
+class Raindrop:
+	MASS = 1
+	RADIUS = 2
+	START_HEIGHT = 550
+	COLOR = Color(0,0,255)
+	def __init__(self, space, x):
+		inertia = pymunk.moment_for_circle(self.MASS, 0, self.RADIUS) 
+		self.body = pymunk.Body(self.MASS, inertia)
+		self.body.position = x, self.START_HEIGHT 
+		shape = pymunk.Circle(self.body, self.RADIUS)
+		space.add(self.body, shape)
+
+	def draw(self, screen):
+		p = int(self.body.position.x), 600-int(self.body.position.y)
+		pygame.draw.circle(screen, self.COLOR , p, int(self.RADIUS), self.RADIUS)	
+
 class Game:
 
 	def init_game(self):
@@ -119,36 +136,21 @@ class Game:
 			ticks_to_next_raindrop -= 1
 			if ticks_to_next_raindrop <= 0:
 				ticks_to_next_raindrop = 5
-				raindrop = self.add_raindrop(self.space)
+				x = self.rabbit_sprite.rect.center[0]; #x is bunny center
+				x = random.randint(x-25,x+25) #randomize x
+				raindrop = Raindrop(self.space, x)
 				raindrops.append(raindrop)
 
 			for raindrop in raindrops:
-				self.draw_raindrop(self.screen, raindrop)
+				raindrop.draw(self.screen)
 
 			#pygame.draw.lines(self.screen, Color(0,255,0), False, [self.p1,self.p2])
-
 
 			# Physics step
 			self.space.step(1/50.0)
 
 			pygame.display.flip()
 
-
-	def add_raindrop(self, space):
-		mass = 1
-		radius = 2
-		inertia = pymunk.moment_for_circle(mass, 0, radius) 
-		body = pymunk.Body(mass, inertia)
-		x = self.rabbit_sprite.rect.center[0]; #x is bunny center
-		x = random.randint(x-25,x+25) #randomize x
-		body.position = x, 550 
-		shape = pymunk.Circle(body, radius)
-		self.space.add(body, shape)
-		return shape
-
-	def draw_raindrop(self, screen, ball):
-		p = int(ball.body.position.x), 600-int(ball.body.position.y)
-		pygame.draw.circle(screen, Color(0,0,255), p, int(ball.radius), 2)
 
 	def main(self):
 		"""this function is called when the program starts.
