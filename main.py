@@ -121,27 +121,34 @@ class Game:
 		for raindrop in self.raindrops:
 			raindrop.draw(self.screen)
 
+	# return False to signal quit
+	def handle_input_events(self):
+		#Handle Input Events
+		for event in pygame.event.get():
+			if (event.type == QUIT) or (	event.type == KEYDOWN and event.key == K_ESCAPE):
+				return False
+			# key_to_dir(event.key) != 0 for valid keys
+			elif event.type == KEYDOWN and utils.key_to_dir(event.key) != 0:
+				self.rabbit_sprite.start_walk(utils.key_to_dir(event.key));
+			elif event.type == KEYUP and utils.key_to_dir(event.key) != 0:
+				self.rabbit_sprite.stop_walk(utils.key_to_dir(event.key));
+			elif event.type == KEYDOWN and event.key == K_SPACE:
+				self.rabbit_sprite.start_jump();
+		return True
+
 
 	def do_main_loop(self):
 		#Main Loop
 		ticks_to_next_raindrop = 10
+
 		running = True
 		while running:
 			self.clock.tick(60)
 
-			#Handle Input Events
-			for event in pygame.event.get():
-				if event.type == QUIT:
-					running = False
-				elif event.type == KEYDOWN and event.key == K_ESCAPE:
-					running = False
-				# key_to_dir(event.key) != 0 for valid keys
-				elif event.type == KEYDOWN and utils.key_to_dir(event.key) != 0:
-					self.rabbit_sprite.start_walk(utils.key_to_dir(event.key));
-				elif event.type == KEYUP and utils.key_to_dir(event.key) != 0:
-					self.rabbit_sprite.stop_walk(utils.key_to_dir(event.key));
-				elif event.type == KEYDOWN and event.key == K_SPACE:
-					self.rabbit_sprite.start_jump();
+			running = self.handle_input_events()
+			if running != True:
+				continue
+
 			self.allsprites.update()
 
 			#Draw Everything
