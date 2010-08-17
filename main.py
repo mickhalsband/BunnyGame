@@ -125,7 +125,8 @@ class Game:
 	def handle_input_events(self):
 		#Handle Input Events
 		for event in pygame.event.get():
-			if (event.type == QUIT) or (	event.type == KEYDOWN and event.key == K_ESCAPE):
+			if (event.type == QUIT) \
+			or (	event.type == KEYDOWN and event.key == K_ESCAPE):
 				return False
 			# key_to_dir(event.key) != 0 for valid keys
 			elif event.type == KEYDOWN and utils.key_to_dir(event.key) != 0:
@@ -137,17 +138,16 @@ class Game:
 		return True
 
 
+	#Main Loop
 	def do_main_loop(self):
-		#Main Loop
 		ticks_to_next_raindrop = 10
 
-		running = True
-		while running:
+		# will break out on invalid (quit) events
+		while True:
 			self.clock.tick(60)
 
-			running = self.handle_input_events()
-			if running != True:
-				continue
+			if (not self.handle_input_events()):
+				break
 
 			self.allsprites.update()
 
