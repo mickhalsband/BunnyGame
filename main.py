@@ -55,6 +55,9 @@ class Raindrop:
 
 class Game:
 
+	ticks_to_next_raindrop = 0
+	raindrops = []
+
 	def init_game(self):
 		#Initialize Everything
 		pygame.init()
@@ -105,9 +108,22 @@ class Game:
 		self.p2 = pv2.x, flipy(pv2.y)
 		pygame.draw.lines(self.screen, 0, False, [self.p1,self.p2])
 
+
+	def handle_rain(self):  
+		self.ticks_to_next_raindrop -= 1
+		if self.ticks_to_next_raindrop <= 0:
+			self.ticks_to_next_raindrop = 5
+			x = self.rabbit_sprite.rect.center[0]; #x is bunny center
+			x = random.randint(x-25,x+25) #randomize x
+			raindrop = Raindrop(self.space, x)
+			self.raindrops.append(raindrop)
+
+		for raindrop in self.raindrops:
+			raindrop.draw(self.screen)
+
+
 	def do_main_loop(self):
 		#Main Loop
-		raindrops = []
 		ticks_to_next_raindrop = 10
 		running = True
 		while running:
@@ -132,17 +148,8 @@ class Game:
 			self.screen.blit(self.background, (0, 0))
 			self.allsprites.draw(self.screen)
 
-###        
-			ticks_to_next_raindrop -= 1
-			if ticks_to_next_raindrop <= 0:
-				ticks_to_next_raindrop = 5
-				x = self.rabbit_sprite.rect.center[0]; #x is bunny center
-				x = random.randint(x-25,x+25) #randomize x
-				raindrop = Raindrop(self.space, x)
-				raindrops.append(raindrop)
-
-			for raindrop in raindrops:
-				raindrop.draw(self.screen)
+###     
+			self.handle_rain()   
 
 			#pygame.draw.lines(self.screen, Color(0,255,0), False, [self.p1,self.p2])
 
