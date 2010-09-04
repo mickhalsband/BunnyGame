@@ -93,8 +93,8 @@ class Game:
 		self.space.gravity = (0.0, -900.0)
 
 		# ground line
-		self.line_point1 = Vec2d(30, flipy(350))
-		line_point2 = Vec2d(600, flipy(350))
+		self.line_point1 = Vec2d(0, flipy(350))
+		line_point2 = Vec2d(800, flipy(350))
 		print self.line_point1, line_point2
 		body = pymunk.Body(pymunk.inf, pymunk.inf)
 		self.line = pymunk.Segment(body, self.line_point1, line_point2, 5.0)
