@@ -43,10 +43,11 @@ class Raindrop:
 	START_HEIGHT = 550
 	COLOR = Color(0,0,255)
 	def __init__(self, space, x):
-		inertia = pymunk.moment_for_circle(self.MASS, 0, self.RADIUS) 
-		self.body = pymunk.Body(self.MASS, inertia)
+#		inertia = pymunk.moment_for_circle(self.MASS, 0, self.RADIUS) 
+		self.body = pymunk.Body(self.MASS, 100)#inertia)
 		self.body.position = x, self.START_HEIGHT 
 		shape = pymunk.Circle(self.body, self.RADIUS)
+		shape.friction = 0.5
 		space.add(self.body, shape)
 
 	def draw(self, screen):
@@ -57,7 +58,6 @@ class Game:
 
 	ticks_to_next_raindrop = 0
 	raindrops = []
-	static_lines = []
 
 	def init_game(self, run_path):
 		#Initialize Everything
@@ -88,36 +88,18 @@ class Game:
 		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite))
 
 		# PHYSICS STUFF
+		pymunk.init_pymunk()
 		self.space = pymunk.Space()
 		self.space.gravity = (0.0, -900.0)
 
-#		line_point1 = Vec2d(30 , flipy(350))        
-#		line_point2 = Vec2d(600, flipy(350))
-#		body = pymunk.Body(pymunk.inf, pymunk.inf)
-#		line= pymunk.Segment(body, line_point1, line_point2, 0.0)
-#		line.friction = 0.99
-#		self.space.add_static(line)
-
-#		body = line.body
-#		pv1 = body.position + line.a.rotated(body.angle)
-#		pv2 = body.position + line.b.rotated(body.angle)
-#		self.p1 = pv1.x, flipy(pv1.y)
-#		self.p2 = pv2.x, flipy(pv2.y)
-#		pygame.draw.lines(self.screen, 0, False, [self.p1,self.p2])
-
-		self.line_point1 = None
-
-		if self.line_point1 is None:
-			self.line_point1 = Vec2d(30, flipy(350))
-		if self.line_point1 is not None:
-			line_point2 = Vec2d(600, flipy(350))
-			print self.line_point1, line_point2
-			body = pymunk.Body(pymunk.inf, pymunk.inf)
-			shape= pymunk.Segment(body, self.line_point1, line_point2, 0.0)
-			shape.friction = 0.99
-			self.space.add_static(shape)
-			self.static_lines.append(shape)
-			self.line_point1 = None
+		# ground line
+		self.line_point1 = Vec2d(30, flipy(350))
+		line_point2 = Vec2d(600, flipy(350))
+		print self.line_point1, line_point2
+		body = pymunk.Body(pymunk.inf, pymunk.inf)
+		self.line = pymunk.Segment(body, self.line_point1, line_point2, 5.0)
+		self.line.friction = 0.99
+		self.space.add_static(self.line)
 
 	def handle_rain(self):  
 		self.ticks_to_next_raindrop -= 1
@@ -167,14 +149,13 @@ class Game:
      
 			self.handle_rain()   
 
-			for line in self.static_lines:
-				body = line.body
-		
-				pv1 = body.position + line.a.rotated(body.angle)
-				pv2 = body.position + line.b.rotated(body.angle)
-				p1 = pv1.x, flipy(pv1.y)
-				p2 = pv2.x, flipy(pv2.y)
-				pygame.draw.lines(self.screen, Color(100,100,100), False, [p1,p2])
+			# line
+			body = self.line.body	
+			pv1 = body.position + self.line.a.rotated(body.angle)
+			pv2 = body.position + self.line.b.rotated(body.angle)
+			p1 = pv1.x, flipy(pv1.y)
+			p2 = pv2.x, flipy(pv2.y)
+			pygame.draw.lines(self.screen, Color(100,100,100), False, [p1,p2])
 
 			### Update physics
 			# for some reason 1.0/60.0 crashes like hell :(
