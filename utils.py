@@ -3,8 +3,9 @@ import os, pygame
 from pygame.locals import *
 
 #functions to create our resources
-def load_image(name, colorkey=None):
-	fullname = os.path.join('resources', name)
+def load_image(name, run_path, colorkey=None):
+	basepath = os.path.join(run_path, 'resources')
+	fullname = os.path.join(basepath, name)
 	try:
 		image = pygame.image.load(fullname)
 	except pygame.error as message:

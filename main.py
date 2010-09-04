@@ -57,8 +57,9 @@ class Game:
 
 	ticks_to_next_raindrop = 0
 	raindrops = []
+	static_lines = []
 
-	def init_game(self):
+	def init_game(self, run_path):
 		#Initialize Everything
 		pygame.init()
 		self.screen = pygame.display.set_mode((800,600))
@@ -83,31 +84,40 @@ class Game:
 
 		#Prepare Game Objects
 		self.clock = pygame.time.Clock()
-		#whiff_sound = utils.load_sound('whiff.wav')
-		#punch_sound = utils.load_sound('punch.wav')
-		self.rabbit_sprite = rabbit.Rabbit()
-		#	bird = Bird()
+		self.rabbit_sprite = rabbit.Rabbit(run_path)
 		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite))
 
 		# PHYSICS STUFF
-		#pymunk.init_pymunk()
 		self.space = pymunk.Space()
 		self.space.gravity = (0.0, -900.0)
 
-		line_point1 = Vec2d(30 , flipy(350))        
-		line_point2 = Vec2d(600, flipy(350))
-		body = pymunk.Body(pymunk.inf, pymunk.inf)
-		line= pymunk.Segment(body, line_point1, line_point2, 0.0)
-		line.friction = 0.99
-		self.space.add_static(line)
+#		line_point1 = Vec2d(30 , flipy(350))        
+#		line_point2 = Vec2d(600, flipy(350))
+#		body = pymunk.Body(pymunk.inf, pymunk.inf)
+#		line= pymunk.Segment(body, line_point1, line_point2, 0.0)
+#		line.friction = 0.99
+#		self.space.add_static(line)
 
-		body = line.body
-		pv1 = body.position + line.a.rotated(body.angle)
-		pv2 = body.position + line.b.rotated(body.angle)
-		self.p1 = pv1.x, flipy(pv1.y)
-		self.p2 = pv2.x, flipy(pv2.y)
-		pygame.draw.lines(self.screen, 0, False, [self.p1,self.p2])
+#		body = line.body
+#		pv1 = body.position + line.a.rotated(body.angle)
+#		pv2 = body.position + line.b.rotated(body.angle)
+#		self.p1 = pv1.x, flipy(pv1.y)
+#		self.p2 = pv2.x, flipy(pv2.y)
+#		pygame.draw.lines(self.screen, 0, False, [self.p1,self.p2])
 
+		self.line_point1 = None
+
+		if self.line_point1 is None:
+			self.line_point1 = Vec2d(30, flipy(350))
+		if self.line_point1 is not None:
+			line_point2 = Vec2d(600, flipy(350))
+			print self.line_point1, line_point2
+			body = pymunk.Body(pymunk.inf, pymunk.inf)
+			shape= pymunk.Segment(body, self.line_point1, line_point2, 0.0)
+			shape.friction = 0.99
+			self.space.add_static(shape)
+			self.static_lines.append(shape)
+			self.line_point1 = None
 
 	def handle_rain(self):  
 		self.ticks_to_next_raindrop -= 1
@@ -154,14 +164,23 @@ class Game:
 			#Draw Everything
 			self.screen.blit(self.background, (0, 0))
 			self.allsprites.draw(self.screen)
-
-###     
+     
 			self.handle_rain()   
 
-			#pygame.draw.lines(self.screen, Color(0,255,0), False, [self.p1,self.p2])
+			for line in self.static_lines:
+				body = line.body
+		
+				pv1 = body.position + line.a.rotated(body.angle)
+				pv2 = body.position + line.b.rotated(body.angle)
+				p1 = pv1.x, flipy(pv1.y)
+				p2 = pv2.x, flipy(pv2.y)
+				pygame.draw.lines(self.screen, Color(100,100,100), False, [p1,p2])
 
-			# Physics step
-			self.space.step(1/50.0)
+			### Update physics
+			# for some reason 1.0/60.0 crashes like hell :(
+			dt = 1.0/55.0
+			for x in range(1):
+				self.space.step(dt)
 
 			pygame.display.flip()
 
@@ -171,7 +190,10 @@ class Game:
 		   it initializes everything it needs, then runs in
 		   a loop until the function returns."""
 
-		self.init_game()
+		# pass down base path os that resources could be loaded when relative path is envoked
+		run_path = os.path.dirname(os.path.abspath(sys.argv[0]))
+		
+		self.init_game(run_path)
 
 		self.do_main_loop()
 

@@ -15,9 +15,9 @@ WALK_SPEED = 1.5
 class Rabbit(pygame.sprite.Sprite):
 	"""moves a rabbit critter across the screen. it can spin the
 	   rabbit when it is punched."""
-	def __init__(self):
+	def __init__(self, run_path):
 		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
-		self.image, self.rect = utils.load_image('rabbit.png', -1)
+		self.image, self.rect = utils.load_image('rabbit.png', run_path, -1)
 		screen = pygame.display.get_surface()
 		self.area = screen.get_rect()
 		self.rect.width = 10
