@@ -40,6 +40,18 @@ def flipy(y):
 
 class Game:
 
+	def handle_rain(self):  
+		self.ticks_to_next_raindrop -= 1
+		if self.ticks_to_next_raindrop <= 0:
+			self.ticks_to_next_raindrop = 5
+			x = self.rabbit_sprite.rect.center[0]; #x is bunny center
+			x = random.randint(x-25,x+25) #randomize x
+			raindrop = rain.Raindrop(self.space, x)
+			self.raindrops.append(raindrop)
+
+		for raindrop in self.raindrops:
+			raindrop.draw(self.screen)
+
 	ticks_to_next_raindrop = 0
 	raindrops = []
 
@@ -85,18 +97,6 @@ class Game:
 		self.line = pymunk.Segment(body, self.line_point1, line_point2, 5.0)
 		self.line.friction = 0.99
 		self.space.add_static(self.line)
-
-	def handle_rain(self):  
-		self.ticks_to_next_raindrop -= 1
-		if self.ticks_to_next_raindrop <= 0:
-			self.ticks_to_next_raindrop = 5
-			x = self.rabbit_sprite.rect.center[0]; #x is bunny center
-			x = random.randint(x-25,x+25) #randomize x
-			raindrop = rain.Raindrop(self.space, x)
-			self.raindrops.append(raindrop)
-
-		for raindrop in self.raindrops:
-			raindrop.draw(self.screen)
 
 	# return False to signal quit
 	def handle_input_events(self):
