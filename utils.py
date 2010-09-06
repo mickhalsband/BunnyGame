@@ -2,6 +2,10 @@
 import os, pygame
 from pygame.locals import *
 
+def flipy(y):
+    """Small hack to convert chipmunk physics to pygame coordinates"""
+    return -y+600
+
 #functions to create our resources
 def load_image(name, run_path, colorkey=None):
 	basepath = os.path.join(run_path, 'resources')

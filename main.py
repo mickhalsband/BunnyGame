@@ -31,12 +31,6 @@ import rain
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
 
-
-def flipy(y):
-    """Small hack to convert chipmunk physics to pygame coordinates"""
-    return -y+600
-
-
 class Game:
 
 	def init_game(self, run_path):
@@ -74,8 +68,8 @@ class Game:
 		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite, self.cloud_sprite))
 
 		# ground line
-		self.line_point1 = Vec2d(0, flipy(350))
-		line_point2 = Vec2d(800, flipy(350))
+		self.line_point1 = Vec2d(0, utils.flipy(350))
+		line_point2 = Vec2d(800, utils.flipy(350))
 		print self.line_point1, line_point2
 		body = pymunk.Body(pymunk.inf, pymunk.inf)
 		self.line = pymunk.Segment(body, self.line_point1, line_point2, 5.0)
@@ -96,6 +90,7 @@ class Game:
 				self.rabbit_sprite.stop_walk(utils.key_to_dir(event.key));
 			elif event.type == KEYDOWN and event.key == K_SPACE:
 				self.rabbit_sprite.start_jump();
+			self.cloud_sprite.rect.left = self.rabbit_sprite.rect.left
 		return True
 
 
@@ -122,8 +117,8 @@ class Game:
 			body = self.line.body	
 			pv1 = body.position + self.line.a.rotated(body.angle)
 			pv2 = body.position + self.line.b.rotated(body.angle)
-			p1 = pv1.x, flipy(pv1.y)
-			p2 = pv2.x, flipy(pv2.y)
+			p1 = pv1.x, utils.flipy(pv1.y)
+			p2 = pv2.x, utils.flipy(pv2.y)
 			pygame.draw.lines(self.screen, Color(100,100,100), False, [p1,p2])
 
 			### Update physics

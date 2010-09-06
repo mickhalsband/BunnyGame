@@ -7,12 +7,11 @@ import random
 class Raindrop:
 	MASS = 1
 	RADIUS = 2
-	START_HEIGHT = 550
 	COLOR = Color(0,0,255)
-	def __init__(self, space, x):
+	def __init__(self, space, x, y):
 		inertia = pymunk.moment_for_circle(self.MASS, 0, self.RADIUS) 
 		self.body = pymunk.Body(self.MASS, inertia)
-		self.body.position = x, self.START_HEIGHT 
+		self.body.position = x, y 
 		shape = pymunk.Circle(self.body, self.RADIUS)
 		shape.friction = 0.5
 		space.add(self.body, shape)
@@ -41,7 +40,7 @@ class Cloud(pygame.sprite.Sprite):
 		if self.raindrop_ticks <= 0:
 			self.raindrop_ticks = 5
 			x = random.randint(self.rect.left,self.rect.right) #randomize x
-			raindrop = Raindrop(self.space, x)
+			raindrop = Raindrop(self.space, x, utils.flipy(self.rect.bottom))
 			self.raindrops.append(raindrop)
 
 		for raindrop in self.raindrops:
