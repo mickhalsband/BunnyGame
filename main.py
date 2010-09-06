@@ -23,7 +23,6 @@ import rabbit
 import utils
 import pymunk
 import math
-import random
 from pygame.locals import *
 from pymunk import Vec2d
 import rain
@@ -39,21 +38,6 @@ def flipy(y):
 
 
 class Game:
-
-	def handle_rain(self):  
-		self.ticks_to_next_raindrop -= 1
-		if self.ticks_to_next_raindrop <= 0:
-			self.ticks_to_next_raindrop = 5
-			x = self.rabbit_sprite.rect.center[0]; #x is bunny center
-			x = random.randint(x-25,x+25) #randomize x
-			raindrop = rain.Raindrop(self.space, x)
-			self.raindrops.append(raindrop)
-
-		for raindrop in self.raindrops:
-			raindrop.draw(self.screen)
-
-	ticks_to_next_raindrop = 0
-	raindrops = []
 
 	def init_game(self, run_path):
 		#Initialize Everything
@@ -78,16 +62,16 @@ class Game:
 		self.screen.blit(self.background, (0, 0))
 		pygame.display.flip()
 
-		#Prepare Game Objects
-		self.clock = pygame.time.Clock()
-		self.rabbit_sprite = rabbit.Rabbit(run_path)
-		self.cloud_sprite = rain.Cloud(run_path)
-		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite, self.cloud_sprite))
-
 		# PHYSICS STUFF
 		pymunk.init_pymunk()
 		self.space = pymunk.Space()
 		self.space.gravity = (0.0, -900.0)
+
+		#Prepare Game Objects
+		self.clock = pygame.time.Clock()
+		self.rabbit_sprite = rabbit.Rabbit(run_path)
+		self.cloud_sprite = rain.Cloud(run_path, self.screen, self.space)
+		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite, self.cloud_sprite))
 
 		# ground line
 		self.line_point1 = Vec2d(0, flipy(350))
@@ -126,13 +110,13 @@ class Game:
 			if (not self.handle_input_events()):
 				break
 
-			self.allsprites.update()
-
 			#Draw Everything
 			self.screen.blit(self.background, (0, 0))
 			self.allsprites.draw(self.screen)
-     
-			self.handle_rain()   
+
+			# update after draw:
+			# some sprite (like cloud) handle their own physics and drawing     
+			self.allsprites.update()
 
 			# line
 			body = self.line.body	

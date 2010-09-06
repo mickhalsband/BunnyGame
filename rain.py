@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import pymunk
 import utils
+import random
 
 class Raindrop:
 	MASS = 1
@@ -22,12 +23,30 @@ class Raindrop:
 
 
 class Cloud(pygame.sprite.Sprite):
+	raindrop_ticks = 0
+	raindrops = []
+
 	START_HEIGHT = 10
-	def __init__(self, run_path):
+	def __init__(self, run_path, screen, space):
 		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
 		self.image, self.rect = utils.load_image('cloud.png', run_path, -1)
 		screen = pygame.display.get_surface()
 		self.area = screen.get_rect()
-		self.rect.width = 10
-		self.rect.height = 10
-		self.rect.topleft = 10, self.START_HEIGHT	
+		self.rect.topleft = 300, self.START_HEIGHT
+		self.screen = screen
+		self.space = space
+
+	def handle_rain(self): 
+		self.raindrop_ticks -= 1
+		if self.raindrop_ticks <= 0:
+			self.raindrop_ticks = 5
+			x = random.randint(self.rect.left,self.rect.right) #randomize x
+			raindrop = Raindrop(self.space, x)
+			self.raindrops.append(raindrop)
+
+		for raindrop in self.raindrops:
+			raindrop.draw(self.screen)
+
+	def update(self):
+		self.handle_rain()
+
