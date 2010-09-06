@@ -37,20 +37,13 @@ class Game:
 		#Initialize Everything
 		pygame.init()
 		self.screen = pygame.display.set_mode((800,600))
-		pygame.display.set_caption('Rainy Bunny by Mick v0.1')
+		pygame.display.set_caption('Rainy Bunny v0.1')
 		pygame.mouse.set_visible(0)
 
 		#Create The Backgound
 		self.background = pygame.Surface(self.screen.get_size())
 		self.background = self.background.convert()
 		self.background.fill((250, 250, 250))
-
-		#Put Text On The Background, Centered
-		if pygame.font:
-			font = pygame.font.Font(None, 36)
-			text = font.render("Rainy Bunny", 1, (10, 10, 10))
-			textpos = text.get_rect(centerx=self.background.get_width()/2)
-			self.background.blit(text, textpos)
 
 		#Display The Background
 		self.screen.blit(self.background, (0, 0))
