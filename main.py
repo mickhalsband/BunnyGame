@@ -26,6 +26,7 @@ import math
 import random
 from pygame.locals import *
 from pymunk import Vec2d
+import rain
 
 
 if not pygame.font: print('Warning, fonts disabled')
@@ -36,23 +37,6 @@ def flipy(y):
     """Small hack to convert chipmunk physics to pygame coordinates"""
     return -y+600
 
-
-class Raindrop:
-	MASS = 1
-	RADIUS = 2
-	START_HEIGHT = 550
-	COLOR = Color(0,0,255)
-	def __init__(self, space, x):
-#		inertia = pymunk.moment_for_circle(self.MASS, 0, self.RADIUS) 
-		self.body = pymunk.Body(self.MASS, 100)#inertia)
-		self.body.position = x, self.START_HEIGHT 
-		shape = pymunk.Circle(self.body, self.RADIUS)
-		shape.friction = 0.5
-		space.add(self.body, shape)
-
-	def draw(self, screen):
-		p = int(self.body.position.x), 600-int(self.body.position.y)
-		pygame.draw.circle(screen, self.COLOR , p, int(self.RADIUS), self.RADIUS)	
 
 class Game:
 
@@ -107,7 +91,7 @@ class Game:
 			self.ticks_to_next_raindrop = 5
 			x = self.rabbit_sprite.rect.center[0]; #x is bunny center
 			x = random.randint(x-25,x+25) #randomize x
-			raindrop = Raindrop(self.space, x)
+			raindrop = rain.Raindrop(self.space, x)
 			self.raindrops.append(raindrop)
 
 		for raindrop in self.raindrops:
