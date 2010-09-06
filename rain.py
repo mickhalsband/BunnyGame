@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import pymunk
+import utils
 
 class Raindrop:
 	MASS = 1
@@ -19,3 +20,14 @@ class Raindrop:
 		p = int(self.body.position.x), 600-int(self.body.position.y)
 		pygame.draw.circle(screen, self.COLOR , p, int(self.RADIUS), self.RADIUS)	
 
+
+class Cloud(pygame.sprite.Sprite):
+	START_HEIGHT = 10
+	def __init__(self, run_path):
+		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
+		self.image, self.rect = utils.load_image('cloud.png', run_path, -1)
+		screen = pygame.display.get_surface()
+		self.area = screen.get_rect()
+		self.rect.width = 10
+		self.rect.height = 10
+		self.rect.topleft = 10, self.START_HEIGHT	

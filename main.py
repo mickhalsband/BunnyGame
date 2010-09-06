@@ -69,7 +69,8 @@ class Game:
 		#Prepare Game Objects
 		self.clock = pygame.time.Clock()
 		self.rabbit_sprite = rabbit.Rabbit(run_path)
-		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite))
+		self.cloud_sprite = rain.Cloud(run_path)
+		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite, self.cloud_sprite))
 
 		# PHYSICS STUFF
 		pymunk.init_pymunk()
