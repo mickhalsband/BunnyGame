@@ -86,7 +86,8 @@ class Game:
 				self.rabbit_sprite.stop_walk(utils.key_to_dir(event.key));
 			elif event.type == KEYDOWN and event.key == K_SPACE:
 				self.rabbit_sprite.start_jump();
-			self.cloud_sprite.rect.left = self.rabbit_sprite.rect.left
+
+		self.cloud_sprite.rect.left = self.rabbit_sprite.rect.left
 		return True
 
 
