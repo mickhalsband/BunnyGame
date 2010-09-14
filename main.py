@@ -49,6 +49,9 @@ class Game:
 		self.screen.blit(self.background, (0, 0))
 		pygame.display.flip()
 
+		# load background music
+		ret = pygame.mixer.music.load('resources/background_music.mp3')
+
 		# PHYSICS STUFF
 		pymunk.init_pymunk()
 		self.space = pymunk.Space()
@@ -132,6 +135,9 @@ class Game:
 		run_path = os.path.dirname(os.path.abspath(sys.argv[0]))
 		
 		self.init_game(run_path)
+
+		# yay! creepy background music!
+		ret = pygame.mixer.music.play()
 
 		self.do_main_loop()
 

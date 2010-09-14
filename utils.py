@@ -22,12 +22,13 @@ def load_image(name, run_path, colorkey=None):
 		image.set_colorkey(colorkey, RLEACCEL)
 	return image, image.get_rect()
 
-def load_sound(name):
+def load_sound(name, run_path):
 	class NoneSound:
 		def play(self): pass
 	if not pygame.mixer or not pygame.mixer.get_init():
 		return NoneSound()
-	fullname = os.path.join('resources', name)
+	basepath = os.path.join(run_path, 'resources')
+	fullname = os.path.join(basepath, name)
 	try:
 		sound = pygame.mixer.Sound(fullname)
 	except pygame.error as message:
