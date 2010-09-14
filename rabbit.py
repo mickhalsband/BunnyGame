@@ -7,61 +7,45 @@ The rabbit class
 import os, pygame, math
 from pygame.locals import *
 import utils
+import pymunk
 
 FLOOR_Y = 300
 JUMP_SPEED = 10
 WALK_SPEED = 1.5
 
 class Rabbit(pygame.sprite.Sprite):
-	"""moves a rabbit critter across the screen. it can spin the
-	   rabbit when it is punched."""
-	def __init__(self, run_path):
+	"""Moving rabbit."""
+
+	MASS = 50
+	HEIGHT = 48
+	WIDTH = 33
+	def __init__(self, run_path, space):
 		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
 		self.image, self.rect = utils.load_image('rabbit.png', run_path, -1)
 		screen = pygame.display.get_surface()
 		self.area = screen.get_rect()
-		self.rect.width = 10
-		self.rect.height = 10
-		self.rect.topleft = 10, FLOOR_Y
-		self.step = 3
+		self.rect.width = 0
+		self.rect.height = 0
+		self.rect.topleft = 5, FLOOR_Y
+		self.step = 1
 		self.direction = utils.Direction.right
-		self.v_x = 0 
-		self.v_y = 0
-		self.jumping = 0
+		self.jumping = False
+		self.walking = False
 
-	def init_y(self):
-		self.rect.bottom = FLOOR_Y
-		self.v_y = 0
-		self.jumping = 0		
+		inertia = pymunk.moment_for_box(self.MASS, self.WIDTH, self.HEIGHT)
+		self.body = pymunk.Body(self.MASS, inertia)
+		self.body.position = 5, FLOOR_Y
+		vertices = [(0,0), (self.WIDTH,0), (self.WIDTH,self.HEIGHT), (0,self.HEIGHT)]
+		shape = pymunk.Poly(self.body, vertices, offset=(0, 0))
+		shape.friction = 0.55
+		space.add(self.body, shape)
 
 	def update(self):
-		"walk or jump depending on state"
-		if (self.v_x == 0 and self.v_y == 0 and self.rect.bottom > FLOOR_Y):
-			self.init_y()
-			return
+		if (self.walking):
+			self.body.apply_impulse((750*self.step,0), (0,0))
+		self.rect.centerx = self.body.position.x
+		self.rect.centery = self.body.position.y+self.HEIGHT
 
-		dt = 1
-		dx = 0
-		dy = 0
-
-		# needs optimizations badly!
-		if (1):#(self.v_y != 0):
-			# dx = v0*dt + accel*dt*0.5
-			a_y = 1
-			self.v_y = self.v_y + a_y*math.pow(dt,2)
-			dy = self.v_y*dt
-
-		if (1):#(self.v_x != 0):
-			# dx = v0*dt + accel*dt*0.5
-			a_x = 0
-			self.v_x = self.v_x + a_x*math.pow(dt,2)
-			dx = self.v_x*dt
-				
-		self.rect = self.rect.move((dx, dy))
-
-		if (self.rect.bottom > FLOOR_Y):
-			self.init_y()
-	
 	def start_walk(self, direction):
 		if (direction != self.direction):
 			#flip image and step
@@ -69,17 +53,11 @@ class Rabbit(pygame.sprite.Sprite):
 			self.image = pygame.transform.flip(self.image, 1, 0)
 			self.step = self.step * -1;
 			
-		self.v_x = self.step * WALK_SPEED
+		self.walking = True
 
 	# called when keypress ends
 	def stop_walk(self, direction):
-		self.v_x = 0
+		self.walking = False
 		
 	def start_jump(self):
-		if (self.jumping == 1):
-			# don't double jump
-			return
-		self.jumping = 1	
-
-		# kick rabbit with initial speed (negative val = upwards)
-		self.v_y = -1 * JUMP_SPEED
+		self.body.apply_impulse((0,-30000), (0,0))
