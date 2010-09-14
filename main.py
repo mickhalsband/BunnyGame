@@ -102,6 +102,11 @@ class Game:
 			if (not self.handle_input_events()):
 				break
 
+			# check for music
+			if (False == pygame.mixer.music.get_busy()):
+				# yay! creepy background music!
+				ret = pygame.mixer.music.play()				
+
 			#Draw Everything
 			self.screen.blit(self.background, (0, 0))
 			self.allsprites.draw(self.screen)
@@ -136,9 +141,6 @@ class Game:
 		run_path = os.path.dirname(os.path.abspath(sys.argv[0]))
 		
 		self.init_game(run_path)
-
-		# yay! creepy background music!
-		ret = pygame.mixer.music.play()
 
 		self.do_main_loop()
 
