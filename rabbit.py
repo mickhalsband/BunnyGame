@@ -19,8 +19,14 @@ class Rabbit(pygame.sprite.Sprite):
 	MASS = 50
 	HEIGHT = 48
 	WIDTH = 33
+	FPS = 10
 	def __init__(self, run_path, space):
 		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
+		self._images = utils.load_sliced_sprites(self.WIDTH, self.HEIGHT, 'rabbit_sprite.png')
+		self._start = pygame.time.get_ticks()
+		self._delay = 1000 / self.FPS
+		self._last_update = 0
+		self._frame = 0
 		self.image, self.rect = utils.load_image('rabbit.png', run_path, -1)
 		screen = pygame.display.get_surface()
 		self.area = screen.get_rect()
@@ -39,21 +45,29 @@ class Rabbit(pygame.sprite.Sprite):
 		shape = pymunk.Poly(self.body, vertices, offset=(0, 0))
 		shape.friction = 0.55
 		space.add(self.body, shape)
+		self.update()
 
-        def _draw_wireframe(self):
+	def _draw_wireframe(self):
 		# the b-box debug wireframe
 		rect = Rect(self.body.position.x, self.body.position.y+self.HEIGHT, self.WIDTH, self.HEIGHT)
 		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), rect.bottomleft, rect.topleft)
 		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), rect.topleft, rect.topright)
 		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), rect.topright, rect.bottomright)
 		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), rect.bottomright, rect.bottomleft)
-                
+
 	def update(self):
 		if (self.walking):
 			self.body.apply_impulse((750*self.step,0), (0,0))
 		self.rect.centerx = self.body.position.x
 		self.rect.centery = self.body.position.y+self.HEIGHT
 		self._draw_wireframe()
+		t = pygame.time.get_ticks()
+		if t - self._last_update > self._delay:
+			self._frame += 1
+			if self._frame >= len(self._images): 
+				self._frame = 0
+			self.image = self._images[self._frame]
+			self._last_update = t
 
 	def start_walk(self, direction):
 		if (direction != self.direction):
@@ -61,7 +75,6 @@ class Rabbit(pygame.sprite.Sprite):
 			self.direction = direction
 			self.image = pygame.transform.flip(self.image, 1, 0)
 			self.step = self.step * -1;
-			
 		self.walking = True
 
 	# called when keypress ends

@@ -103,7 +103,7 @@ class Game:
 			# check for music
 			if (False == pygame.mixer.music.get_busy()):
 				# yay! creepy background music!
-				ret = pygame.mixer.music.play()				
+				ret = pygame.mixer.music.play()
 
 			#Draw Everything
 			self.screen.blit(self.background, (0, 0))
