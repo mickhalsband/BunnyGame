@@ -15,9 +15,10 @@ WALK_SPEED = 1.5
 
 class AnimatedSprite(pygame.sprite.Sprite):
 	"""Base class for an animated sprite"""
-	def __init__(self, w, h, sprite_filename):
+	def __init__(self, rect, sprite_filename):
 		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
-		self._images = utils.load_sliced_sprites(w, h, sprite_filename)
+		self.rect = rect
+		self._images = utils.load_sliced_sprites(rect.width, rect.height, sprite_filename)
 		self._start = pygame.time.get_ticks()
 		self._delay = 1000 / self.FPS
 		self._last_update = 0
@@ -36,6 +37,12 @@ class AnimatedSprite(pygame.sprite.Sprite):
 			if (self.direction == utils.Direction.left):
 				self.image = pygame.transform.flip(self.image, 1, 0)
 			
+		if (self.walking):
+			self.body.apply_impulse((750*self.step,0), (0,0))
+
+		self.rect.centerx = self.body.position.x
+		self.rect.centery = self.body.position.y+self.HEIGHT
+		self._draw_wireframe()
 
 class Rabbit(AnimatedSprite):
 	"""Moving rabbit."""
@@ -47,7 +54,6 @@ class Rabbit(AnimatedSprite):
 	def __init__(self, run_path, space):
 		screen = pygame.display.get_surface()
 		self.area = screen.get_rect()
-		self.rect = Rect(5, FLOOR_Y, self.WIDTH, self.HEIGHT)
 		self.step = 1
 		self.direction = utils.Direction.right
 		self.jumping = False
@@ -61,7 +67,7 @@ class Rabbit(AnimatedSprite):
 		shape.friction = 0.55
 		space.add(self.body, shape)
 
-		AnimatedSprite.__init__(self, self.WIDTH, self.HEIGHT, 'rabbit_sprite.png') #call Sprite intializer
+		AnimatedSprite.__init__(self, Rect(5, FLOOR_Y, self.WIDTH, self.HEIGHT), 'rabbit_sprite.png') #call Sprite intializer
 		
 	def _draw_wireframe(self):
 		# the b-box debug wireframe
@@ -73,12 +79,6 @@ class Rabbit(AnimatedSprite):
 
 	def update(self):
 		AnimatedSprite.update(self)
-		if (self.walking):
-			self.body.apply_impulse((750*self.step,0), (0,0))
-
-		self.rect.centerx = self.body.position.x
-		self.rect.centery = self.body.position.y+self.HEIGHT
-		self._draw_wireframe()
 
 	def start_walk(self, direction):
 		if (direction != self.direction):
