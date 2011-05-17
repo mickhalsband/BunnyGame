@@ -85,7 +85,8 @@ class Game:
 			elif event.type == KEYDOWN and event.key == K_SPACE:
 				self.rabbit_sprite.start_jump();
 
-		self.cloud_sprite.rect.left = self.rabbit_sprite.rect.left
+		#self.cloud_sprite.rect.left = self.rabbit_sprite.image.rect.left
+		self.cloud_sprite.rect.left = self.rabbit_sprite.body.position.x
 		return True
 
 

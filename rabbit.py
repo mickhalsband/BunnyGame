@@ -13,7 +13,27 @@ FLOOR_Y = 300
 JUMP_SPEED = 10
 WALK_SPEED = 1.5
 
-class Rabbit(pygame.sprite.Sprite):
+class AnimatedSprite(pygame.sprite.Sprite):
+	"""Base class for an animated sprite"""
+	def __init__(self, w, h, sprite_filename):
+		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
+		self._images = utils.load_sliced_sprites(w, h, sprite_filename)
+		self._start = pygame.time.get_ticks()
+		self._delay = 1000 / self.FPS
+		self._last_update = 0
+		self._frame = 0
+		self.update()
+
+	def update(self):
+		t = pygame.time.get_ticks()
+		if t - self._last_update > self._delay:
+			self._frame += 1
+			if self._frame >= len(self._images): 
+				self._frame = 0
+			self.image = self._images[self._frame]
+			self._last_update = t
+
+class Rabbit(AnimatedSprite):
 	"""Moving rabbit."""
 
 	MASS = 50
@@ -21,18 +41,9 @@ class Rabbit(pygame.sprite.Sprite):
 	WIDTH = 33
 	FPS = 10
 	def __init__(self, run_path, space):
-		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
-		self._images = utils.load_sliced_sprites(self.WIDTH, self.HEIGHT, 'rabbit_sprite.png')
-		self._start = pygame.time.get_ticks()
-		self._delay = 1000 / self.FPS
-		self._last_update = 0
-		self._frame = 0
-		self.image, self.rect = utils.load_image('rabbit.png', run_path, -1)
 		screen = pygame.display.get_surface()
 		self.area = screen.get_rect()
-		self.rect.width = 0
-		self.rect.height = 0
-		self.rect.topleft = 5, FLOOR_Y
+		self.rect = Rect(5, FLOOR_Y, self.WIDTH, self.HEIGHT)
 		self.step = 1
 		self.direction = utils.Direction.right
 		self.jumping = False
@@ -45,8 +56,9 @@ class Rabbit(pygame.sprite.Sprite):
 		shape = pymunk.Poly(self.body, vertices, offset=(0, 0))
 		shape.friction = 0.55
 		space.add(self.body, shape)
-		self.update()
 
+		AnimatedSprite.__init__(self, self.WIDTH, self.HEIGHT, 'rabbit_sprite.png') #call Sprite intializer
+		
 	def _draw_wireframe(self):
 		# the b-box debug wireframe
 		rect = Rect(self.body.position.x, self.body.position.y+self.HEIGHT, self.WIDTH, self.HEIGHT)
@@ -56,18 +68,12 @@ class Rabbit(pygame.sprite.Sprite):
 		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), rect.bottomright, rect.bottomleft)
 
 	def update(self):
+		AnimatedSprite.update(self)
 		if (self.walking):
 			self.body.apply_impulse((750*self.step,0), (0,0))
 		self.rect.centerx = self.body.position.x
 		self.rect.centery = self.body.position.y+self.HEIGHT
 		self._draw_wireframe()
-		t = pygame.time.get_ticks()
-		if t - self._last_update > self._delay:
-			self._frame += 1
-			if self._frame >= len(self._images): 
-				self._frame = 0
-			self.image = self._images[self._frame]
-			self._last_update = t
 
 	def start_walk(self, direction):
 		if (direction != self.direction):
