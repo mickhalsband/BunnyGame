@@ -22,24 +22,24 @@ class AnimatedSprite(pygame.sprite.Sprite):
 		self._start = pygame.time.get_ticks()
 		self._delay = 1000 / self.FPS
 		self._last_update = 0
-		self._frame = 0
+		self._frame_index = 0
+		self.distance = 0
 		self.update()
 
 	def update(self):
-		t = pygame.time.get_ticks()
-		if t - self._last_update > self._delay:
+		if (self.walking):
+			self.body.apply_impulse((750*self.step,0), (0,0))		
+	
+		self.distance += int(abs(self.body.position.x - self.rect.centerx))
+		print self.distance
+		if self.distance > 5:
 			# do update
-			self._frame += 1
-			if self._frame >= len(self._images): 
-				self._frame = 0
-			self.image = self._images[self._frame]
-			self._last_update = t
+			self._frame_index = (self._frame_index + 1) % len(self._images)
+			self.image = self._images[self._frame_index]
 			if (self.direction == utils.Direction.left):
 				self.image = pygame.transform.flip(self.image, 1, 0)
+			self.distance = 0
 			
-		if (self.walking):
-			self.body.apply_impulse((750*self.step,0), (0,0))
-
 		self.rect.centerx = self.body.position.x
 		self.rect.centery = self.body.position.y+self.HEIGHT
 		self._draw_wireframe()
