@@ -21,25 +21,22 @@ class AnimatedSprite(pygame.sprite.Sprite):
 		self._start = pygame.time.get_ticks()
 		self._last_update = 0
 		self._frame_index = 0
-		self.distance = 0
+		self._distance = 0
+		self.image = self._images[0]
 		self.update()
 
-	def update(self):
-		if (self.walking):
-			self.body.apply_impulse((750*self.step,0), (0,0))		
-	
-		self.distance += int(abs(self.body.position.x - self.rect.centerx))
-		print self.distance
-		if self.distance > 10:
+	def _advance_image(self):
+		if self._distance > 10:
 			# do update
 			self._frame_index = (self._frame_index + 1) % len(self._images)
 			self.image = self._images[self._frame_index]
 			if (self.direction == utils.Direction.left):
 				self.image = pygame.transform.flip(self.image, 1, 0)
-			self.distance = 0
+			self._distance = 0
+	
+	def update(self):		
+		self._advance_image()
 			
-		self.rect.centerx = self.body.position.x
-		self.rect.centery = self.body.position.y+1.5*self.HEIGHT # WTF?! i don't get the locations here
 		self._draw_wireframe()
 
 class Rabbit(AnimatedSprite):
@@ -77,6 +74,15 @@ class Rabbit(AnimatedSprite):
 		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), self.rect.bottomright, self.rect.bottomleft)
 
 	def update(self):
+		if (self.walking):
+			self.body.apply_impulse((750*self.step,0), (0,0))		
+	
+		body_centerx = self.body.position.x + self.WIDTH/2
+		self._distance += int(abs(body_centerx - self.rect.centerx))
+		
+		self.rect.centerx = body_centerx
+		self.rect.centery = self.body.position.y+1.5*self.HEIGHT # WTF?! i don't get the locations here
+	
 		AnimatedSprite.update(self)
 
 	def start_walk(self, direction):
