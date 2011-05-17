@@ -15,12 +15,10 @@ WALK_SPEED = 1.5
 
 class AnimatedSprite(pygame.sprite.Sprite):
 	"""Base class for an animated sprite"""
-	def __init__(self, rect, sprite_filename):
+	def __init__(self, sprite_filename):
 		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
-		self.rect = rect
-		self._images = utils.load_sliced_sprites(rect.width, rect.height, sprite_filename)
+		self._images = utils.load_sliced_sprites(self.rect.width, self.rect.height, sprite_filename)
 		self._start = pygame.time.get_ticks()
-		self._delay = 1000 / self.FPS
 		self._last_update = 0
 		self._frame_index = 0
 		self.distance = 0
@@ -32,7 +30,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 	
 		self.distance += int(abs(self.body.position.x - self.rect.centerx))
 		print self.distance
-		if self.distance > 5:
+		if self.distance > 10:
 			# do update
 			self._frame_index = (self._frame_index + 1) % len(self._images)
 			self.image = self._images[self._frame_index]
@@ -41,7 +39,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 			self.distance = 0
 			
 		self.rect.centerx = self.body.position.x
-		self.rect.centery = self.body.position.y+self.HEIGHT
+		self.rect.centery = self.body.position.y+1.5*self.HEIGHT # WTF?! i don't get the locations here
 		self._draw_wireframe()
 
 class Rabbit(AnimatedSprite):
@@ -61,21 +59,22 @@ class Rabbit(AnimatedSprite):
 
 		inertia = pymunk.moment_for_box(self.MASS, self.WIDTH, self.HEIGHT)
 		self.body = pymunk.Body(self.MASS, inertia)
-		self.body.position = 5, FLOOR_Y
+		self.body.position = 100, FLOOR_Y
 		vertices = [(0,0), (self.WIDTH,0), (self.WIDTH,self.HEIGHT), (0,self.HEIGHT)]
 		shape = pymunk.Poly(self.body, vertices, offset=(0, 0))
 		shape.friction = 0.55
 		space.add(self.body, shape)
 
-		AnimatedSprite.__init__(self, Rect(5, FLOOR_Y, self.WIDTH, self.HEIGHT), 'rabbit_sprite.png') #call Sprite intializer
+		self.rect = Rect(self.body.position.x, self.body.position.y, self.WIDTH, self.HEIGHT)
+		AnimatedSprite.__init__(self, 'rabbit_sprite.png') #call Sprite intializer
 		
 	def _draw_wireframe(self):
 		# the b-box debug wireframe
-		rect = Rect(self.body.position.x, self.body.position.y+self.HEIGHT, self.WIDTH, self.HEIGHT)
-		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), rect.bottomleft, rect.topleft)
-		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), rect.topleft, rect.topright)
-		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), rect.topright, rect.bottomright)
-		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), rect.bottomright, rect.bottomleft)
+		 #= Rect(self.body.position.x, self.body.position.y+self.HEIGHT, self.WIDTH, self.HEIGHT)
+		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), self.rect.bottomleft, self.rect.topleft)
+		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), self.rect.topleft, self.rect.topright)
+		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), self.rect.topright, self.rect.bottomright)
+		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), self.rect.bottomright, self.rect.bottomleft)
 
 	def update(self):
 		AnimatedSprite.update(self)
