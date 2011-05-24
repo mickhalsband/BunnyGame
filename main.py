@@ -57,7 +57,7 @@ class Game:
 
 		#Prepare Game Objects
 		self.clock = pygame.time.Clock()
-		self.rabbit_sprite = rabbit.Rabbit(run_path, self.space)
+		self.rabbit_sprite = rabbit.Rabbit(run_path, self.space, pygame.display.get_surface())
 		self.cloud_sprite = rain.Cloud(run_path, self.screen, self.space)
 		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite, self.cloud_sprite))
 
@@ -78,12 +78,12 @@ class Game:
 			or (	event.type == KEYDOWN and event.key == K_ESCAPE):
 				return False
 			# key_to_dir(event.key) != 0 for valid keys
-			elif event.type == KEYDOWN and utils.key_to_dir(event.key) != 0:
+			elif event.type == KEYDOWN and utils.key_to_dir(event.key) != utils.Direction.none:
 				self.rabbit_sprite.start_walk(utils.key_to_dir(event.key));
-			elif event.type == KEYUP and utils.key_to_dir(event.key) != 0:
+			elif event.type == KEYUP and utils.key_to_dir(event.key) != utils.Direction.none:
 				self.rabbit_sprite.stop_walk(utils.key_to_dir(event.key));
 			elif event.type == KEYDOWN and event.key == K_SPACE:
-				self.rabbit_sprite.start_jump();
+				self.rabbit_sprite.jump();
 
 		#self.cloud_sprite.rect.left = self.rabbit_sprite.image.rect.left
 		self.cloud_sprite.rect.left = self.rabbit_sprite.body.position.x
@@ -132,9 +132,9 @@ class Game:
 
 
 	def main(self):
-		"""this function is called when the program starts.
+		'''this function is called when the program starts.
 		   it initializes everything it needs, then runs in
-		   a loop until the function returns."""
+		   a loop until the function returns.'''
 
 		# pass down base path os that resources could be loaded when relative path is envoked
 		run_path = os.path.dirname(os.path.abspath(sys.argv[0]))

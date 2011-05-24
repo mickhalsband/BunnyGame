@@ -14,7 +14,7 @@ JUMP_SPEED = 10
 WALK_SPEED = 1.5
 
 class AnimatedSprite(pygame.sprite.Sprite):
-	"""Base class for an animated sprite"""
+	'''Base class for an animated sprite'''
 	def __init__(self, sprite_filename):
 		pygame.sprite.Sprite.__init__(self) #call Sprite intializer
 		self._images = utils.load_sliced_sprites(self.rect.width, self.rect.height, sprite_filename)
@@ -24,6 +24,10 @@ class AnimatedSprite(pygame.sprite.Sprite):
 		self._distance = 0
 		self.image = self._images[0]
 		self.update()
+		
+	def _draw_wireframe(self):
+		'''Draw the bounding-box debug wireframe'''
+		pygame.draw.rect(pygame.display.get_surface(), (0, 0, 255), self.rect, 1)
 
 	def _advance_image(self):
 		if self._distance > 10:
@@ -40,18 +44,19 @@ class AnimatedSprite(pygame.sprite.Sprite):
 		self._draw_wireframe()
 
 class Rabbit(AnimatedSprite):
-	"""Moving rabbit."""
+	'''
+	Animated rabbit sprite
+	'''
 
 	MASS = 50
 	HEIGHT = 48
 	WIDTH = 33
 	FPS = 10
-	def __init__(self, run_path, space):
-		screen = pygame.display.get_surface()
+	def __init__(self, run_path, space, screen):
 		self.area = screen.get_rect()
 		self.step = 1
 		self.direction = utils.Direction.right
-		self.jumping = False
+		#self.jumping = False
 		self.walking = False
 
 		inertia = pymunk.moment_for_box(self.MASS, self.WIDTH, self.HEIGHT)
@@ -64,14 +69,6 @@ class Rabbit(AnimatedSprite):
 
 		self.rect = Rect(self.body.position.x, self.body.position.y, self.WIDTH, self.HEIGHT)
 		AnimatedSprite.__init__(self, 'rabbit_sprite.png') #call Sprite intializer
-		
-	def _draw_wireframe(self):
-		# the b-box debug wireframe
-		 #= Rect(self.body.position.x, self.body.position.y+self.HEIGHT, self.WIDTH, self.HEIGHT)
-		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), self.rect.bottomleft, self.rect.topleft)
-		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), self.rect.topleft, self.rect.topright)
-		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), self.rect.topright, self.rect.bottomright)
-		pygame.draw.line(pygame.display.get_surface(), (0, 0, 255), self.rect.bottomright, self.rect.bottomleft)
 
 	def update(self):
 		if (self.walking):
@@ -96,5 +93,5 @@ class Rabbit(AnimatedSprite):
 	def stop_walk(self, direction):
 		self.walking = False
 		
-	def start_jump(self):
+	def jump(self):
 		self.body.apply_impulse((0,-30000), (0,0))
