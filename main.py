@@ -29,6 +29,8 @@ import rain
 if not pygame.font: print('Warning, fonts disabled')
 if not pygame.mixer: print('Warning, sound disabled')
 
+floor = 350
+
 class Game:
 
 	def init_game(self, run_path):
@@ -51,7 +53,7 @@ class Game:
 		ret = pygame.mixer.music.load('resources/background_music.mp3')
 
 		# PHYSICS STUFF
-		pymunk.init_pymunk()
+		#pymunk.init_pymunk()
 		self.space = pymunk.Space()
 		self.space.gravity = (0.0, -900.0)
 
@@ -62,8 +64,8 @@ class Game:
 		self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite, self.cloud_sprite))
 
 		# ground line
-		self.line_point1 = Vec2d(0, utils.flipy(350))
-		line_point2 = Vec2d(800, utils.flipy(350))
+		self.line_point1 = Vec2d(0, utils.flipy(floor))
+		line_point2 = Vec2d(800, utils.flipy(floor))
 		print self.line_point1, line_point2
 		body = pymunk.Body(pymunk.inf, pymunk.inf)
 		self.line = pymunk.Segment(body, self.line_point1, line_point2, 5.0)
@@ -75,7 +77,7 @@ class Game:
 		#Handle Input Events
 		for event in pygame.event.get():
 			if (event.type == QUIT) \
-			or (	event.type == KEYDOWN and event.key == K_ESCAPE):
+			or (event.type == KEYDOWN and event.key == K_ESCAPE):
 				return False
 			# key_to_dir(event.key) != 0 for valid keys
 			elif event.type == KEYDOWN and utils.key_to_dir(event.key) != utils.Direction.none:
@@ -92,7 +94,7 @@ class Game:
 
 	#Main Loop
 	def do_main_loop(self):
-		ticks_to_next_raindrop = 10
+		#ticks_to_next_raindrop = 10
 
 		# will break out on invalid (quit) events
 		while True:
@@ -124,7 +126,7 @@ class Game:
 
 			### Update physics
 			# for some reason 1.0/60.0 crashes like hell :(
-			dt = 1.0/55.0
+			dt = 1.0/60.0
 			for x in range(1):
 				self.space.step(dt)
 

@@ -40,8 +40,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 	
 	def update(self):		
 		self._advance_image()
-			
-		self._draw_wireframe()
+		# self._draw_wireframe()
 
 class Rabbit(AnimatedSprite):
 	'''
@@ -72,13 +71,14 @@ class Rabbit(AnimatedSprite):
 
 	def update(self):
 		if (self.walking):
-			self.body.apply_impulse((750*self.step,0), (0,0))		
+			self.body.apply_impulse((500*self.step,0), (0,0))		
 	
 		body_centerx = self.body.position.x + self.WIDTH/2
 		self._distance += int(abs(body_centerx - self.rect.centerx))
 		
 		self.rect.centerx = body_centerx
-		self.rect.centery = self.body.position.y+1.5*self.HEIGHT # WTF?! i don't get the locations here
+#		self.rect.centery = self.body.position.y+1.5*self.HEIGHT # WTF?! i don't get the locations here
+		self.rect.centery = utils.flipy(self.body.position.y+self.HEIGHT/2) # WTF?! i don't get the locations here
 	
 		AnimatedSprite.update(self)
 
@@ -94,4 +94,4 @@ class Rabbit(AnimatedSprite):
 		self.walking = False
 		
 	def jump(self):
-		self.body.apply_impulse((0,-30000), (0,0))
+		self.body.apply_impulse((0,20000), (0,0))
