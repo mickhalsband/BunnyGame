@@ -2,7 +2,7 @@
 
 """
 This simple example is used for the line-by-line tutorial
-that comes with pygame.
+that comes with pygame. 
 """
 
 #Import Modules
@@ -20,7 +20,6 @@ import pygame
 import rabbit
 import utils
 import pymunk
-import math
 from pygame.locals import *
 from pymunk import Vec2d
 import rain
@@ -32,6 +31,7 @@ if not pygame.mixer:
     print('Warning, sound disabled')
 
 floor = 350
+music_enabled = False
 
 
 class Game:
@@ -52,7 +52,8 @@ class Game:
         pygame.display.flip()
 
         # load background music
-        #ret = pygame.mixer.music.load('resources/background_music.mp3')
+        if music_enabled:
+            pygame.mixer.music.load('resources/background_music.wav')
 
         # PHYSICS STUFF
         #pymunk.init_pymunk()
@@ -72,7 +73,8 @@ class Game:
         body = pymunk.Body(pymunk.inf, pymunk.inf)
         self.line = pymunk.Segment(body, self.line_point1, line_point2, 5.0)
         self.line.friction = 0.99
-        self.space.add_static(self.line)
+        # self.space.add_static(self.line)
+        self.space.add(self.line)
 
     # return False to signal quit
     def handle_input_events(self):
@@ -104,9 +106,9 @@ class Game:
                 break
 
             # check for music
-            if (False == pygame.mixer.music.get_busy()):
+            if (music_enabled and False == pygame.mixer.music.get_busy()):
                 # yay! creepy background music!
-                ret = pygame.mixer.music.play()
+                pygame.mixer.music.play()
 
             #Draw Everything
             self.screen.blit(self.background, (0, 0))
