@@ -2,7 +2,7 @@
 
 """
 This simple example is used for the line-by-line tutorial
-that comes with pygame. 
+that comes with pygame.
 """
 
 #Import Modules
