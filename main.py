@@ -30,7 +30,7 @@ if not pygame.font:
 if not pygame.mixer:
     print('Warning, sound disabled')
 
-floor = 350
+floor = 300
 music_enabled = False
 
 
@@ -66,15 +66,22 @@ class Game:
         self.cloud_sprite = rain.Cloud(run_path, self.screen, self.space)
         self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite, self.cloud_sprite))
 
-        # ground line
-        self.line_point1 = Vec2d(0, utils.flipy(floor))
-        line_point2 = Vec2d(800, utils.flipy(floor))
-        print self.line_point1, line_point2
-        body = pymunk.Body(pymunk.inf, pymunk.inf)
-        self.line = pymunk.Segment(body, self.line_point1, line_point2, 5.0)
-        self.line.friction = 0.99
+        self.body = pymunk.Body(pymunk.inf, pymunk.inf)
+        self.init_ground()
+
+    # ground line
+    def init_ground(self):
+        '''this initializes the ground'''
+        correct_floor = utils.flipy(floor)
+        self.line1 = pymunk.Segment(self.body, Vec2d(0, correct_floor), Vec2d(400, correct_floor-100), 5.0)
+        self.line1.friction = 0.99
         # self.space.add_static(self.line)
-        self.space.add(self.line)
+        self.space.add(self.line1)
+
+        self.line2 = pymunk.Segment(self.body, Vec2d(400, correct_floor-100), Vec2d(800, correct_floor), 5.0)
+        self.line2.friction = 0.99
+        # self.space.add_static(self.line)
+        self.space.add(self.line2)
 
     # return False to signal quit
     def handle_input_events(self):
@@ -118,13 +125,8 @@ class Game:
             # some sprite (like cloud) handle their own physics and drawing
             self.allsprites.update()
 
-            # line
-            body = self.line.body
-            pv1 = body.position + self.line.a.rotated(body.angle)
-            pv2 = body.position + self.line.b.rotated(body.angle)
-            p1 = pv1.x, utils.flipy(pv1.y)
-            p2 = pv2.x, utils.flipy(pv2.y)
-            pygame.draw.lines(self.screen, Color(100, 100, 100), False, [p1, p2])
+            self.print_ground(self.line1)
+            self.print_ground(self.line2)
 
             ### Update physics
             # for some reason 1.0/60.0 crashes like hell :(
@@ -133,6 +135,14 @@ class Game:
                 self.space.step(dt)
 
             pygame.display.flip()
+
+    def print_ground(self, line):
+        pv1 = self.body.position + line.a.rotated(self.body.angle)
+        pv2 = self.body.position + line.b.rotated(self.body.angle)
+        p1 = pv1.x, utils.flipy(pv1.y)
+        p2 = pv2.x, utils.flipy(pv2.y)
+
+        pygame.draw.lines(self.screen, Color(100, 100, 100), False, [p1, p2])
 
     def main(self):
         '''this function is called when the program starts.
