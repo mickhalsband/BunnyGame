@@ -13,7 +13,6 @@ FLOOR_Y = 300
 JUMP_SPEED = 10
 WALK_SPEED = 1.5
 
-
 class AnimatedSprite(pygame.sprite.Sprite):
     '''Base class for an animated sprite'''
     def __init__(self, sprite_filename):
@@ -41,7 +40,7 @@ class AnimatedSprite(pygame.sprite.Sprite):
 
     def update(self):
         self._advance_image()
-        # self._draw_wireframe()
+        self._draw_wireframe()
 
 
 class Rabbit(AnimatedSprite):

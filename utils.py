@@ -5,7 +5,6 @@ from pygame.locals import *
 
 RESOURCE_DIR = 'resources'
 
-
 def flipy(y):
     """Small hack to convert chipmunk physics to pygame coordinates"""
     return -y+600
@@ -34,7 +33,7 @@ def load_sliced_sprites(w, h, filename):
         Master can be any height.
         Sprites frames width must be the same width
         Master width must be len(frames)*frame.width
-        Assuming you ressources directory is named "resources"
+        Assuming your resources directory is named "resources"
     '''
     images = []
     master_image = pygame.image.load(os.path.join(RESOURCE_DIR, filename)).convert_alpha()

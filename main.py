@@ -35,6 +35,8 @@ music_enabled = False
 
 
 class Game:
+    GROUND_COLLISION_TYPE = 3453
+
     def init_game(self, run_path):
         #Initialize Everything
         pygame.init()
@@ -59,6 +61,7 @@ class Game:
         #pymunk.init_pymunk()
         self.space = pymunk.Space()
         self.space.gravity = (0.0, -900.0)
+        self.space.add_collision_handler(rain.Raindrop.COLLISION_TYPE, self.GROUND_COLLISION_TYPE, self.begin_rain_collision_func)
 
         #Prepare Game Objects
         self.clock = pygame.time.Clock()
@@ -69,16 +72,28 @@ class Game:
         self.body = pymunk.Body(pymunk.inf, pymunk.inf)
         self.init_ground()
 
+    def begin_rain_collision_func(space, arbiter, *args, **kwargs):
+        #if (arbiter is rain.Raindrop and space is ):
+        drop = arbiter.shapes[0]
+        # ?!?
+#    if drop is rain.Raindrop:
+        with drop as rain.Raindrop:
+            drop.is_grounded = True
+            print arbiter.uid
+        return True
+
     # ground line
     def init_ground(self):
         '''this initializes the ground'''
         correct_floor = utils.flipy(floor)
         self.line1 = pymunk.Segment(self.body, Vec2d(0, correct_floor), Vec2d(400, correct_floor-100), 5.0)
+        self.line1.collision_type = self.GROUND_COLLISION_TYPE
         self.line1.friction = 0.99
         # self.space.add_static(self.line)
         self.space.add(self.line1)
 
         self.line2 = pymunk.Segment(self.body, Vec2d(400, correct_floor-100), Vec2d(800, correct_floor), 5.0)
+        self.line2.collision_type = self.GROUND_COLLISION_TYPE
         self.line2.friction = 0.99
         # self.space.add_static(self.line)
         self.space.add(self.line2)
@@ -124,6 +139,9 @@ class Game:
             # update after draw:
             # some sprite (like cloud) handle their own physics and drawing
             self.allsprites.update()
+
+            #if (self.rabbit_sprite.body.position.y > self.cloud_sprite.topmost_drop.body.position.y):
+            #    self.rabbit_sprite.body.mass = rabbit.Rabbit.MASS * 1.5
 
             self.print_ground(self.line1)
             self.print_ground(self.line2)
