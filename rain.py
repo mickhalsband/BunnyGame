@@ -9,10 +9,11 @@ import random
 
 
 class Raindrop:
-    MASS = 0.1
+    MASS = 0.05
     RADIUS = 2
     COLOR = Color(0, 0, 255)
     COLLISION_TYPE = 3142
+    FRICTION = 0.3
     uid = 0
 
     def __init__(self, space, x, y):
@@ -21,7 +22,7 @@ class Raindrop:
         self.body.position = x, y
         shape = pymunk.Circle(self.body, Raindrop.RADIUS)
         shape.collision_type = self.COLLISION_TYPE
-        shape.friction = 0.5
+        shape.friction = self.FRICTION
         space.add(self.body, shape)
         self.is_grounded = False
         self.uid = Raindrop.uid

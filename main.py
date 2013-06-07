@@ -8,9 +8,10 @@ that comes with pygame.
 #Import Modules
 import os
 import sys
+
 # Added for linux server
 # Adds server folders to PYTHONPATH
-# ========================================
+# ========================================d
 basedir = os.path.normpath(os.path.join(os.path.dirname(sys.argv[0]), '..'))
 sys.path.append(basedir)
 # end of linux part
@@ -61,7 +62,7 @@ class Game:
         #pymunk.init_pymunk()
         self.space = pymunk.Space()
         self.space.gravity = (0.0, -900.0)
-        self.space.add_collision_handler(rain.Raindrop.COLLISION_TYPE, self.GROUND_COLLISION_TYPE, self.begin_rain_collision_func)
+        # self.space.add_collision_handler(rain.Raindrop.COLLISION_TYPE, self.GROUND_COLLISION_TYPE, self.begin_rain_collision_func)
 
         #Prepare Game Objects
         self.clock = pygame.time.Clock()
@@ -71,16 +72,20 @@ class Game:
 
         self.body = pymunk.Body(pymunk.inf, pymunk.inf)
         self.init_ground()
-
+    
     def begin_rain_collision_func(space, arbiter, *args, **kwargs):
-        #if (arbiter is rain.Raindrop and space is ):
-        drop = arbiter.shapes[0]
-        # ?!?
-#    if drop is rain.Raindrop:
-        with drop as rain.Raindrop:
-            drop.is_grounded = True
-            print arbiter.uid
-        return True
+        pass
+        # #if (arbiter is rain.Raindrop and space is ):        
+        # drop = arbiter.shapes[1]
+        # # ?!?
+        # if (isinstance(drop, rain.Raindrop)):
+        #     d = rain.Raindrop(drop)
+        #     d.is_grounded = True
+        #     print d.uid
+        # else:
+        #     print drop
+        #     
+        # return True
 
     # ground line
     def init_ground(self):
@@ -147,12 +152,21 @@ class Game:
             self.print_ground(self.line2)
 
             ### Update physics
-            # for some reason 1.0/60.0 crashes like hell :(
-            dt = 1.0/60.0
-            for x in range(1):
-                self.space.step(dt)
-
+            self.update_physics()
+            
+            self.ray_trace()
+            
             pygame.display.flip()
+
+
+    def update_physics(self):
+        # for some reason 1.0/60.0 crashes like hell :(
+        dt = 1.0/60.0
+        for x in range(1):
+            self.space.step(dt)
+
+    def ray_trace(self):
+        pass
 
     def print_ground(self, line):
         pv1 = self.body.position + line.a.rotated(self.body.angle)
