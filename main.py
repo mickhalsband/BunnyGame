@@ -37,11 +37,13 @@ music_enabled = False
 
 class Game:
     GROUND_COLLISION_TYPE = 3453
+    WIDTH = 800
+    HEIGHT = 600
 
     def init_game(self, run_path):
         #Initialize Everything
         pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
+        self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         pygame.display.set_caption('Rainy Bunny v0.1')
         pygame.mouse.set_visible(0)
 
@@ -72,10 +74,10 @@ class Game:
 
         self.body = pymunk.Body(pymunk.inf, pymunk.inf)
         self.init_ground()
-    
+
     def begin_rain_collision_func(space, arbiter, *args, **kwargs):
         pass
-        # #if (arbiter is rain.Raindrop and space is ):        
+        # #if (arbiter is rain.Raindrop and space is ):
         # drop = arbiter.shapes[1]
         # # ?!?
         # if (isinstance(drop, rain.Raindrop)):
@@ -84,7 +86,7 @@ class Game:
         #     print d.uid
         # else:
         #     print drop
-        #     
+        #
         # return True
 
     # ground line
@@ -153,11 +155,10 @@ class Game:
 
             ### Update physics
             self.update_physics()
-            
-            self.ray_trace()
-            
-            pygame.display.flip()
 
+            #self.ray_trace()
+
+            pygame.display.flip()
 
     def update_physics(self):
         # for some reason 1.0/60.0 crashes like hell :(
@@ -166,7 +167,16 @@ class Game:
             self.space.step(dt)
 
     def ray_trace(self):
+        for col in range(1, self.WIDTH):
+            hit_height = self.drop_line(col)
+
+    def drop_line(self, col):
+        for row in range(1, self.HEIGHT):
+            self.check_collision(col, row)
+
+    def check_collision(self, col, row):
         pass
+#        if this.space.
 
     def print_ground(self, line):
         pv1 = self.body.position + line.a.rotated(self.body.angle)
