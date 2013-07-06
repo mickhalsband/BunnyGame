@@ -9,8 +9,8 @@ import random
 
 
 class Raindrop:
-    MASS = 0.05
-    RADIUS = 2
+    MASS = 0.06
+    RADIUS = 5
     COLOR = Color(0, 0, 255)
     COLLISION_TYPE = 3142
     FRICTION = 0.3
@@ -39,6 +39,7 @@ class Raindrop:
 
 class Cloud(pygame.sprite.Sprite):
     TICKS_TILL_NEXT_DROP = 5
+    RAIN_CREATION_THRESHOLD = 550
     raindrop_ticks = 0  # timeout counter till next raindrop
     raindrops = []
 
@@ -59,18 +60,41 @@ class Cloud(pygame.sprite.Sprite):
         if self.raindrop_ticks <= 0:
             self.drop_next_drop()
 
+        raindrops_pending_delete = []
         for raindrop in self.raindrops:
-            #if (raindrop.is_grounded is False):
-            #    continue
+            if (raindrop.body.position.y < self.RAIN_CREATION_THRESHOLD):
+                raindrop.is_grounded = True
+
+            if (raindrop.is_grounded is False):
+                continue
+
+            if (raindrop.body.position.y < 0):
+                raindrops_pending_delete.append(raindrop)
 
             if (topmost_drop is None):
                 topmost_drop = raindrop
-            if (topmost_drop.body.position.y > raindrop.body.position.y):
+
+            # again y is reversed for some weird reason
+            if (topmost_drop.body.position.y < raindrop.body.position.y):
                 topmost_drop = raindrop
+                print ('top most drop y = %0.0f' % topmost_drop.body.position.y)
 
             raindrop.update(self.screen)
 
+        self.handle_raindrop_delete(raindrops_pending_delete)
+
         return topmost_drop
+
+    def handle_raindrop_delete(self, raindrops_pending_delete):
+        if (len(raindrops_pending_delete) == 0):
+            return
+
+        print "length is %d" % len(raindrops_pending_delete)
+        for raindrop in raindrops_pending_delete:
+            print "removing raindrop %s" % raindrop
+            self.raindrops.remove(raindrop)
+            self.space.remove(raindrop.body)
+
 
     def drop_next_drop(self):
         self.raindrop_ticks = Cloud.TICKS_TILL_NEXT_DROP

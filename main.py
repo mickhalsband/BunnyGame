@@ -93,13 +93,13 @@ class Game:
     def init_ground(self):
         '''this initializes the ground'''
         correct_floor = utils.flipy(floor)
-        self.line1 = pymunk.Segment(self.body, Vec2d(0, correct_floor), Vec2d(400, correct_floor-100), 5.0)
+        self.line1 = pymunk.Segment(self.body, Vec2d(0, correct_floor), Vec2d(400, correct_floor-100), 10.0)
         self.line1.collision_type = self.GROUND_COLLISION_TYPE
         self.line1.friction = 0.99
         # self.space.add_static(self.line)
         self.space.add(self.line1)
 
-        self.line2 = pymunk.Segment(self.body, Vec2d(400, correct_floor-100), Vec2d(800, correct_floor), 5.0)
+        self.line2 = pymunk.Segment(self.body, Vec2d(400, correct_floor-100), Vec2d(800, correct_floor), 10.0)
         self.line2.collision_type = self.GROUND_COLLISION_TYPE
         self.line2.friction = 0.99
         # self.space.add_static(self.line)
@@ -150,8 +150,8 @@ class Game:
             #if (self.rabbit_sprite.body.position.y > self.cloud_sprite.topmost_drop.body.position.y):
             #    self.rabbit_sprite.body.mass = rabbit.Rabbit.MASS * 1.5
 
-            self.print_ground(self.line1)
-            self.print_ground(self.line2)
+            self.draw_ground(self.line1)
+            self.draw_ground(self.line2)
 
             ### Update physics
             self.update_physics()
@@ -178,7 +178,7 @@ class Game:
         pass
 #        if this.space.
 
-    def print_ground(self, line):
+    def draw_ground(self, line):
         pv1 = self.body.position + line.a.rotated(self.body.angle)
         pv2 = self.body.position + line.b.rotated(self.body.angle)
         p1 = pv1.x, utils.flipy(pv1.y)
