@@ -64,7 +64,7 @@ class Game:
         #pymunk.init_pymunk()
         self.space = pymunk.Space()
         self.space.gravity = (0.0, -900.0)
-        # self.space.add_collision_handler(rain.Raindrop.COLLISION_TYPE, self.GROUND_COLLISION_TYPE, self.begin_rain_collision_func)
+        self.space.add_collision_handler(rain.Raindrop.COLLISION_TYPE, self.GROUND_COLLISION_TYPE, self.begin_rain_collision_func)
 
         #Prepare Game Objects
         self.clock = pygame.time.Clock()
@@ -76,18 +76,15 @@ class Game:
         self.init_ground()
 
     def begin_rain_collision_func(space, arbiter, *args, **kwargs):
-        pass
-        # #if (arbiter is rain.Raindrop and space is ):
-        # drop = arbiter.shapes[1]
-        # # ?!?
-        # if (isinstance(drop, rain.Raindrop)):
-        #     d = rain.Raindrop(drop)
-        #     d.is_grounded = True
-        #     print d.uid
-        # else:
-        #     print drop
-        #
-        # return True
+        #pass
+        #if (arbiter is rain.Raindrop and space is ):
+        s0 = arbiter.shapes[0]
+        s1 = arbiter.shapes[1]
+        # ?!?
+        verify_type(s0)
+        verify_type(s1)
+
+        return True
 
     # ground line
     def init_ground(self):
@@ -195,8 +192,21 @@ class Game:
         run_path = os.path.dirname(os.path.abspath(sys.argv[0]))
         self.init_game(run_path)
         self.do_main_loop()
+        #Game Over
 
-    #Game Over
+
+def verify_type(shape):
+    if (isinstance(shape, rain.Raindrop)):
+        print "shape is %s" % shape
+        d = rain.Raindrop(shape)
+        d.is_grounded = True
+        print "drop id = %d" % d.uid
+    elif (isinstance(shape, pymunk.Segment)):
+        #s = pymunk.Segment(shape)
+        print "shape is %s, (%0.0f,%0.0f)" % (shape, shape.body.position.x, shape.body.position.y)
+        print "shape pos is %s" % shape.body.position
+    else:
+        print "shape is %s" % shape
 
 #this calls the 'main' function when this script is executed
 if __name__ == '__main__':

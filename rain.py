@@ -7,6 +7,8 @@ import random
 #TODO : add expiration date on rain
 #TODO2: Maybe unite drops...
 
+DEBUG = False
+
 
 class Raindrop:
     MASS = 0.06
@@ -77,7 +79,8 @@ class Cloud(pygame.sprite.Sprite):
             # again y is reversed for some weird reason
             if (topmost_drop.body.position.y < raindrop.body.position.y):
                 topmost_drop = raindrop
-                print ('top most drop y = %0.0f' % topmost_drop.body.position.y)
+                if (DEBUG):
+                    print ('top most drop y = %0.0f' % topmost_drop.body.position.y)
 
             raindrop.update(self.screen)
 
