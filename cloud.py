@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 import utils
 import random
+import raindrop
 
 #TODO : add expiration date on rain
 #TODO2: Maybe unite drops...
@@ -72,8 +73,8 @@ class Cloud(pygame.sprite.Sprite):
     def drop_next_drop(self):
         self.raindrop_ticks = Cloud.TICKS_TILL_NEXT_DROP
         x = random.randint(self.rect.left, self.rect.right)  # randomize x
-        raindrop = Raindrop(self.space, x, utils.flipy(self.rect.bottom))
-        self.raindrops.append(raindrop)
+        rd = raindrop.Raindrop(self.space, x, utils.flipy(self.rect.bottom))
+        self.raindrops.append(rd)
 
     def update(self):
         self.topmost_drop = self.handle_rain(self.topmost_drop)

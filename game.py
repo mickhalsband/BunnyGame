@@ -1,0 +1,212 @@
+#!/usr/bin/env python
+
+"""
+This simple example is used for the line-by-line tutorial
+that comes with pygame.
+"""
+
+#Import Modules
+import os
+import sys
+
+# Added for linux server
+# Adds server folders to PYTHONPATH
+# ========================================d
+basedir = os.path.normpath(os.path.join(os.path.dirname(sys.argv[0]), '..'))
+sys.path.append(basedir)
+# end of linux part
+# ========================================
+
+import pygame
+import rabbit
+import utils
+import pymunk
+from pygame.locals import *
+from pymunk import Vec2d
+import raindrop
+import cloud
+
+if not pygame.font:
+    print('Warning, fonts disabled')
+if not pygame.mixer:
+    print('Warning, sound disabled')
+
+floor = 300
+music_enabled = False
+
+
+class Game:
+    GROUND_COLLISION_TYPE = 3453
+    WIDTH = 800
+    HEIGHT = 600
+
+    def init_game(self, run_path):
+        #Initialize Everything
+        pygame.init()
+        self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
+        pygame.display.set_caption('Rainy Bunny v0.1')
+        pygame.mouse.set_visible(0)
+
+        #Create The Backgound
+        self.background = pygame.Surface(self.screen.get_size())
+        self.background = self.background.convert()
+        self.background.fill((250, 250, 250))
+
+        #Display The Background
+        self.screen.blit(self.background, (0, 0))
+        pygame.display.flip()
+
+        # load background music
+        if music_enabled:
+            pygame.mixer.music.load('resources/background_music.wav')
+
+        # PHYSICS STUFF
+        #pymunk.init_pymunk()
+        self.space = pymunk.Space()
+        self.space.gravity = (0.0, -900.0)
+        self.space.add_collision_handler(raindrop.Raindrop.COLLISION_TYPE, self.GROUND_COLLISION_TYPE, self.begin_rain_collision_func)
+
+        #Prepare Game Objects
+        self.clock = pygame.time.Clock()
+        self.rabbit_sprite = rabbit.Rabbit(run_path, self.space, pygame.display.get_surface())
+        self.cloud_sprite = cloud.Cloud(run_path, self.screen, self.space)
+        self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite, self.cloud_sprite))
+
+        self.body = pymunk.Body(pymunk.inf, pymunk.inf)
+        self.init_ground()
+
+    def begin_rain_collision_func(space, arbiter, *args, **kwargs):
+        #pass
+        #if (arbiter is raindrop.Raindrop and space is ):
+        s0 = arbiter.shapes[0]
+        s1 = arbiter.shapes[1]
+        # ?!?
+        verify_type(s0)
+        verify_type(s1)
+
+        return True
+
+    # ground line
+    def init_ground(self):
+        '''this initializes the ground'''
+        correct_floor = utils.flipy(floor)
+        self.line1 = pymunk.Segment(self.body, Vec2d(0, correct_floor), Vec2d(400, correct_floor-100), 10.0)
+        self.line1.collision_type = self.GROUND_COLLISION_TYPE
+        self.line1.friction = 0.99
+        # self.space.add_static(self.line)
+        self.space.add(self.line1)
+
+        self.line2 = pymunk.Segment(self.body, Vec2d(400, correct_floor-100), Vec2d(800, correct_floor), 10.0)
+        self.line2.collision_type = self.GROUND_COLLISION_TYPE
+        self.line2.friction = 0.99
+        # self.space.add_static(self.line)
+        self.space.add(self.line2)
+
+    # return False to signal quit
+    def handle_input_events(self):
+        #Handle Input Events
+        for event in pygame.event.get():
+            if (event.type == QUIT) or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                return False
+            # key_to_dir(event.key) != 0 for valid keys
+            elif event.type == KEYDOWN and utils.key_to_dir(event.key) != utils.Direction.none:
+                self.rabbit_sprite.start_walk(utils.key_to_dir(event.key))
+            elif event.type == KEYUP and utils.key_to_dir(event.key) != utils.Direction.none:
+                self.rabbit_sprite.stop_walk(utils.key_to_dir(event.key))
+            elif event.type == KEYDOWN and event.key == K_SPACE:
+                self.rabbit_sprite.jump()
+
+        #self.cloud_sprite.rect.left = self.rabbit_sprite.image.rect.left
+        self.cloud_sprite.rect.left = self.rabbit_sprite.body.position.x
+        return True
+
+    #Main Loop
+    def do_main_loop(self):
+        #ticks_to_next_raindrop = 10
+
+        # will break out on invalid (quit) events
+        while True:
+            self.clock.tick(60)
+
+            if (not self.handle_input_events()):
+                break
+
+            # check for music
+            if (music_enabled and False == pygame.mixer.music.get_busy()):
+                # yay! creepy background music!
+                pygame.mixer.music.play()
+
+            #Draw Everything
+            self.screen.blit(self.background, (0, 0))
+            self.allsprites.draw(self.screen)
+
+            # update after draw:
+            # some sprite (like cloud) handle their own physics and drawing
+            self.allsprites.update()
+
+            #if (self.rabbit_sprite.body.position.y > self.cloud_sprite.topmost_drop.body.position.y):
+            #    self.rabbit_sprite.body.mass = rabbit.Rabbit.MASS * 1.5
+
+            self.draw_ground(self.line1)
+            self.draw_ground(self.line2)
+
+            ### Update physics
+            self.update_physics()
+
+            #self.ray_trace()
+
+            pygame.display.flip()
+
+    def update_physics(self):
+        # for some reason 1.0/60.0 crashes like hell :(
+        dt = 1.0/60.0
+        for x in range(1):
+            self.space.step(dt)
+
+#     def ray_trace(self):
+#         for col in range(1, self.WIDTH):
+#             hit_height = self.drop_line(col)
+
+#     def drop_line(self, col):
+#         for row in range(1, self.HEIGHT):
+#             self.check_collision(col, row)
+
+#     def check_collision(self, col, row):
+#         pass
+# #        if this.space.
+
+    def draw_ground(self, line):
+        pv1 = self.body.position + line.a.rotated(self.body.angle)
+        pv2 = self.body.position + line.b.rotated(self.body.angle)
+        p1 = pv1.x, utils.flipy(pv1.y)
+        p2 = pv2.x, utils.flipy(pv2.y)
+
+        pygame.draw.lines(self.screen, Color(100, 100, 100), False, [p1, p2])
+
+    def main(self):
+        '''this function is called when the program starts.
+           it initializes everything it needs, then runs in
+           a loop until the function returns.'''
+
+        # pass down base path os that resources could be loaded when relative path is envoked
+        run_path = os.path.dirname(os.path.abspath(sys.argv[0]))
+        self.init_game(run_path)
+        self.do_main_loop()
+        #Game Over
+
+
+def verify_type(shape):
+    """
+    Helper function
+    """
+    if (isinstance(shape, raindrop.Raindrop)):
+        print "shape is %s" % shape
+        d = raindrop.Raindrop(shape)
+        d.is_grounded = True
+        print "drop id = %d" % d.uid
+    elif (isinstance(shape, pymunk.Segment)):
+        #s = pymunk.Segment(shape)
+        print "shape is %s, (%0.0f,%0.0f)" % (shape, shape.body.position.x, shape.body.position.y)
+        print "shape pos is %s" % shape.body.position
+    else:
+        print "shape is %s" % shape
