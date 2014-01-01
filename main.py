@@ -1,150 +1,74 @@
-#!/usr/bin/env python
+'''
+Widget animation
+================
 
-"""
-This simple example is used for the line-by-line tutorial
-that comes with pygame.
-"""
+This is showing an example of a animation creation, and how you can apply yo a
+widget.
+'''
 
-#Import Modules
-import os
-import sys
-# Added for linux server
-# Adds server folders to PYTHONPATH
-# ========================================
-basedir = os.path.normpath(os.path.join(os.path.dirname(sys.argv[0]), '..'))
-sys.path.append(basedir)
-# end of linux part
-# ========================================
+import kivy
 
-import pygame
-import rabbit
-import utils
-import pymunk
-import math
-from pygame.locals import *
-from pymunk import Vec2d
-import rain
+kivy.require('1.0.7')
+
+from kivy.app import App
+from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty
+from kivy.uix.boxlayout import BoxLayout
 
 
-if not pygame.font:
-    print('Warning, fonts disabled')
-if not pygame.mixer:
-    print('Warning, sound disabled')
+class Rabbit(BoxLayout):
+    velocity_x = NumericProperty(0)
+    velocity_y = NumericProperty(0)
+    velocity = ReferenceListProperty(velocity_x, velocity_y)
+    image_sprite = ObjectProperty(None)
 
-floor = 350
+    def move(self):
+        #self.pos = Vector(*self.velocity) + self.pos
+        self.center = self.center_x + 1, self.center_y + 100
+        #image_sprite.r
+        #        self.center_x += 1
 
 
-class Game:
-    def init_game(self, run_path):
-        #Initialize Everything
-        pygame.init()
-        self.screen = pygame.display.set_mode((800, 600))
-        pygame.display.set_caption('Rainy Bunny v0.1')
-        pygame.mouse.set_visible(0)
+from kivy.uix.floatlayout import FloatLayout
+from kivy.animation import Animation
+from kivy.core.window import Window
 
-        #Create The Backgound
-        self.background = pygame.Surface(self.screen.get_size())
-        self.background = self.background.convert()
-        self.background.fill((250, 250, 250))
 
-        #Display The Background
-        self.screen.blit(self.background, (0, 0))
-        pygame.display.flip()
+class BunnyGame(FloatLayout):
+    movement = {'left': (-10, 0), 'right': (+10, 0), 'up': (0, +10), 'down': (0, -10)}
 
-        # load background music
-        #ret = pygame.mixer.music.load('resources/background_music.mp3')
+    bunny = ObjectProperty()
 
-        # PHYSICS STUFF
-        #pymunk.init_pymunk()
-        self.space = pymunk.Space()
-        self.space.gravity = (0.0, -900.0)
+    def __init__(self, **kwargs):
+        super(BunnyGame, self).__init__(**kwargs)
+        self._keyboard = Window.request_keyboard(self._keyboard_closed, self)
+        self._keyboard.bind(on_key_down=self._on_keyboard_down)
 
-        #Prepare Game Objects
-        self.clock = pygame.time.Clock()
-        self.rabbit_sprite = rabbit.Rabbit(run_path, self.space, pygame.display.get_surface())
-        self.cloud_sprite = rain.Cloud(run_path, self.screen, self.space)
-        self.allsprites = pygame.sprite.RenderPlain((self.rabbit_sprite, self.cloud_sprite))
+    def _keyboard_closed(self):
+        self._keyboard.unbind(on_key_down=self._on_keyboard_down)
+        self._keyboard = None
 
-        # ground line
-        self.line_point1 = Vec2d(0, utils.flipy(floor))
-        line_point2 = Vec2d(800, utils.flipy(floor))
-        print self.line_point1, line_point2
-        body = pymunk.Body(pymunk.inf, pymunk.inf)
-        self.line = pymunk.Segment(body, self.line_point1, line_point2, 5.0)
-        self.line.friction = 0.99
-        self.space.add_static(self.line)
+    def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
+        keycode_ = keycode[1]
+        print 'keycode is ' + keycode_
 
-    # return False to signal quit
-    def handle_input_events(self):
-        #Handle Input Events
-        for event in pygame.event.get():
-            if (event.type == QUIT) or (event.type == KEYDOWN and event.key == K_ESCAPE):
-                return False
-            # key_to_dir(event.key) != 0 for valid keys
-            elif event.type == KEYDOWN and utils.key_to_dir(event.key) != utils.Direction.none:
-                self.rabbit_sprite.start_walk(utils.key_to_dir(event.key))
-            elif event.type == KEYUP and utils.key_to_dir(event.key) != utils.Direction.none:
-                self.rabbit_sprite.stop_walk(utils.key_to_dir(event.key))
-            elif event.type == KEYDOWN and event.key == K_SPACE:
-                self.rabbit_sprite.jump()
+        if keycode_ in ['up', 'down', 'left', 'right']:
+            offsets = self.movement[keycode_]
+            self.animate_bunny(offsets)
 
-        #self.cloud_sprite.rect.left = self.rabbit_sprite.image.rect.left
-        self.cloud_sprite.rect.left = self.rabbit_sprite.body.position.x
+        elif keycode_ == 'escape' or 'q':
+            exit()
+
         return True
 
-    #Main Loop
-    def do_main_loop(self):
-        #ticks_to_next_raindrop = 10
+    def animate_bunny(self, (x_offset, y_offset)):
+        a = Animation(x=(self.bunny.x + x_offset), y=(self.bunny.y + y_offset), duration=0.1)
+        a.start(self.bunny)
 
-        # will break out on invalid (quit) events
-        while True:
-            self.clock.tick(60)
 
-            if (not self.handle_input_events()):
-                break
+class BunnyApp(App):
+    def build(self):
+        return BunnyGame()
 
-            # check for music
-            if (False == pygame.mixer.music.get_busy()):
-                # yay! creepy background music!
-                ret = pygame.mixer.music.play()
 
-            #Draw Everything
-            self.screen.blit(self.background, (0, 0))
-            self.allsprites.draw(self.screen)
-
-            # update after draw:
-            # some sprite (like cloud) handle their own physics and drawing
-            self.allsprites.update()
-
-            # line
-            body = self.line.body
-            pv1 = body.position + self.line.a.rotated(body.angle)
-            pv2 = body.position + self.line.b.rotated(body.angle)
-            p1 = pv1.x, utils.flipy(pv1.y)
-            p2 = pv2.x, utils.flipy(pv2.y)
-            pygame.draw.lines(self.screen, Color(100, 100, 100), False, [p1, p2])
-
-            ### Update physics
-            # for some reason 1.0/60.0 crashes like hell :(
-            dt = 1.0/60.0
-            for x in range(1):
-                self.space.step(dt)
-
-            pygame.display.flip()
-
-    def main(self):
-        '''this function is called when the program starts.
-           it initializes everything it needs, then runs in
-           a loop until the function returns.'''
-
-        # pass down base path os that resources could be loaded when relative path is envoked
-        run_path = os.path.dirname(os.path.abspath(sys.argv[0]))
-        self.init_game(run_path)
-        self.do_main_loop()
-
-    #Game Over
-
-#this calls the 'main' function when this script is executed
 if __name__ == '__main__':
-    game = Game()
-    game.main()
+    BunnyApp().run()
