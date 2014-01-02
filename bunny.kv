@@ -1,0 +1,34 @@
+#:kivy 1.0.9
+
+<Rabbit>:
+	size_hint: None,None
+	size: 50,50
+    Image:
+	    size_hint: 1,1
+        source: 'resources/rabbit.png'
+
+<BunnyGame>:
+    bunny: rabbit_sprite
+    size: 800, 600
+
+    canvas.before:
+    #Color:
+    #    rgba: 1, 1, 1, 1
+	    Rectangle:
+    	    size: self.size
+	        pos: self.pos
+			source: 'resources/background_far.png'
+            
+    Label:
+        font_size: 70  
+		pos_hint: {'center_x': 0.5 }
+        text: "Bunny Game"
+
+    Rabbit:
+        id: rabbit_sprite
+		pos_hint: {'left': 0.5, 'top': 0.50}
+
+    Button:
+        size_hint: 1, None
+        pos_hint: {'bottom': 0 }
+        on_press: root.animate_bunny(10)
