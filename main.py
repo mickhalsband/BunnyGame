@@ -8,35 +8,23 @@ widget.
 
 import kivy
 
-kivy.require('1.0.7')
-
 from kivy.app import App
-from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
-
-
-class Rabbit(BoxLayout):
-    velocity_x = NumericProperty(0)
-    velocity_y = NumericProperty(0)
-    velocity = ReferenceListProperty(velocity_x, velocity_y)
-    image_sprite = ObjectProperty(None)
-
-    def move(self):
-        #self.pos = Vector(*self.velocity) + self.pos
-        self.center = self.center_x + 1, self.center_y + 100
-        #image_sprite.r
-        #        self.center_x += 1
-
 
 from kivy.uix.floatlayout import FloatLayout
 from kivy.animation import Animation
 from kivy.core.window import Window
 
+kivy.require('1.0.7')
+
+
+class Rabbit(BoxLayout):
+    def __init__(self, **kwargs):
+        super(Rabbit, self).__init__(**kwargs)
+
 
 class BunnyGame(FloatLayout):
     movement = {'left': (-10, 0), 'right': (+10, 0), 'up': (0, +10), 'down': (0, -10)}
-
-    bunny = ObjectProperty()
 
     def __init__(self, **kwargs):
         super(BunnyGame, self).__init__(**kwargs)

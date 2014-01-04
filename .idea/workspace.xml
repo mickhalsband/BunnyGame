@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fbf5e4ed-655e-434d-b723-ffc8ec4886ef" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/rabbit.png" afterPath="$PROJECT_DIR$/resources/rabbit.png" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bunny_game.sublime-project" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/bunny_game.sublime-workspace" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bunny.kv" afterPath="$PROJECT_DIR$/bunny.kv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/double-r/src/kivyx/sprite.py" afterPath="$PROJECT_DIR$/double-r/src/kivyx/sprite.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="KivyGame.iws" />
@@ -25,42 +29,36 @@
     <favorites_list name="KivyGame" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="rabbit.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/rabbit.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1908">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="18" selection-start="1425" selection-end="1425" vertical-scroll-proportion="0.0" vertical-offset="771" max-vertical-offset="1422">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bunny.kv" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/bunny.kv">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="36" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0" vertical-offset="69" max-vertical-offset="720">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rabbit.png" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/rabbit.png">
-          <provider selected="true" editor-type-id="images">
-            <state />
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.47724476">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/main.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="26" column="0" selection-start="615" selection-end="615" vertical-scroll-proportion="-0.37261698" vertical-offset="683" max-vertical-offset="1260">
+                  <folding>
+                    <element signature="e#131#142#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="bunny.kv" pinned="false" current="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/bunny.kv">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="7" column="0" selection-start="99" selection-end="99" vertical-scroll-proportion="0.21355931" vertical-offset="0" max-vertical-offset="720">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -84,15 +82,17 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/double-r/src/kivyx/sprite.py" />
         <option value="$PROJECT_DIR$/bunny.kv" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="y" value="22" />
-    <option name="width" value="1920" />
-    <option name="height" value="971" />
+    <option name="x" value="9" />
+    <option name="y" value="41" />
+    <option name="width" value="1904" />
+    <option name="height" value="955" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -125,31 +125,49 @@
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="KivyGame" />
+              <option name="myItemId" value="BunnyGame" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="KivyGame" />
+              <option name="myItemId" value="BunnyGame" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="KivyGame" />
+              <option name="myItemId" value="BunnyGame" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="KivyGame" />
+              <option name="myItemId" value="BunnyGame" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="KivyGame" />
+              <option name="myItemId" value="BunnyGame" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BunnyGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="BunnyGame" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="double-r" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -159,13 +177,13 @@
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="recentsLimit" value="5" />
     <property name="TODO_SCOPE" value="Project Files" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="recentsLimit" value="5" />
+    <property name="options.lastSelected" value="com.jetbrains.python.configuration.PythonSdkConfigurable" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/double-r/src/kivyx" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -359,7 +377,11 @@
       <created>1388604415021</created>
       <updated>1388604415021</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="&#10;Add sprite from kivyx">
+      <created>1388864668549</created>
+      <updated>1388864668549</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -383,24 +405,24 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1920" height="971" extended-state="0" />
+    <frame x="9" y="41" width="1904" height="955" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18053928" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="0" y="494" width="1897" height="280" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25988024" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="0" y="494" width="1897" height="280" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902467" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32902467" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21321696" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13705851" sideWeight="0.81946075" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23854288" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14407231" sideWeight="0.74011976" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23798358" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20398593" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27185628" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3282532" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -417,109 +439,34 @@
     <MESSAGE value="Hook game to kivy keyboard. left and right keys now move the bunny. &#10;TODO: animations" />
     <MESSAGE value="add project files" />
     <MESSAGE value="fix stupid indentation issue breaking code (animate was indented out of class).&#10;allow graceful exits.&#10;look for valid codes.&#10;TODO: 'y' axis movement still not working" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix stupid indentation issue breaking code (animate was indented out of class).&#10;allow graceful exits.&#10;look for valid codes.&#10;TODO: 'y' axis movement still not working" />
+    <MESSAGE value="&#10;Add sprite from kivyx" />
+    <option name="LAST_COMMIT_MESSAGE" value="&#10;Add sprite from kivyx" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="11" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="python-line">
+          <url>file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/uix/floatlayout.py</url>
+          <line>65</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="17" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/rabbit.py">
+    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/uix/image.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1908">
+        <state line="212" column="0" selection-start="6210" selection-end="6210" vertical-scroll-proportion="0.33279744" vertical-offset="3501" max-vertical-offset="5724">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/resources.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="0" selection-start="1876" selection-end="1876" vertical-scroll-proportion="0.0" vertical-offset="599" max-vertical-offset="1422">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bunny.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="36" selection-start="430" selection-end="430" vertical-scroll-proportion="0.0" vertical-offset="414" max-vertical-offset="720">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rabbit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1908">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="0" selection-start="1876" selection-end="1876" vertical-scroll-proportion="0.0" vertical-offset="599" max-vertical-offset="1422">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bunny.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="187" selection-end="187" vertical-scroll-proportion="0.0" vertical-offset="216" max-vertical-offset="720">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/uix/floatlayout.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="0" selection-start="1457" selection-end="1457" vertical-scroll-proportion="1.0229886" vertical-offset="574" max-vertical-offset="1950" />
-      </provider>
-    </entry>
-    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="311" column="8" selection-start="10203" selection-end="10203" vertical-scroll-proportion="0.33239436" vertical-offset="5182" max-vertical-offset="13158">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/core/window/window_pygame.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="329" column="0" selection-start="12813" selection-end="12813" vertical-scroll-proportion="0.24938272" vertical-offset="5522" max-vertical-offset="6660" />
-      </provider>
-    </entry>
-    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/core/window/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="128" column="0" selection-start="4316" selection-end="4316" vertical-scroll-proportion="-1.4110236" vertical-offset="2984" max-vertical-offset="17586">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/animation.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="201" column="0" selection-start="6209" selection-end="6209" vertical-scroll-proportion="0.94512194" vertical-offset="2782" max-vertical-offset="13014" />
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Downloads/main-1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="1996" vertical-scroll-proportion="0.0" vertical-offset="681" max-vertical-offset="1422" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rabbit.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1854">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="18" selection-start="1425" selection-end="1425" vertical-scroll-proportion="0.0" vertical-offset="771" max-vertical-offset="1422">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bunny.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="36" selection-start="429" selection-end="429" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="720">
+        <state line="33" column="0" selection-start="914" selection-end="914" vertical-scroll-proportion="0.33279744" vertical-offset="297" max-vertical-offset="1098">
           <folding />
         </state>
       </provider>
@@ -527,6 +474,101 @@
     <entry file="file://$PROJECT_DIR$/resources/rabbit.png">
       <provider selected="true" editor-type-id="images">
         <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/rabbit_sprite.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="570" column="18" selection-start="20023" selection-end="20023" vertical-scroll-proportion="0.14846416" vertical-offset="9993" max-vertical-offset="13158">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/lang.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="1428" column="0" selection-start="47103" selection-end="47103" vertical-scroll-proportion="0.3327645" vertical-offset="25239" max-vertical-offset="30708">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/uix/label.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="128" column="0" selection-start="3878" selection-end="3878" vertical-scroll-proportion="0.32019705" vertical-offset="1965" max-vertical-offset="9306">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/uix/widget.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="147" column="0" selection-start="5400" selection-end="5400" vertical-scroll-proportion="0.32019705" vertical-offset="2289" max-vertical-offset="11862">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/uix/boxlayout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="101" column="0" selection-start="2968" selection-end="2968" vertical-scroll-proportion="0.32019705" vertical-offset="1605" max-vertical-offset="3996">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/uix/layout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="60" column="0" selection-start="1897" selection-end="1897" vertical-scroll-proportion="0.32019705" vertical-offset="867" max-vertical-offset="1566">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///Applications/Kivy.app/Contents/Resources/kivy/kivy/uix/floatlayout.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="0" selection-start="1534" selection-end="1534" vertical-scroll-proportion="0.32019705" vertical-offset="975" max-vertical-offset="2340">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="45" selection-start="96" selection-end="96" vertical-scroll-proportion="0.05970149" vertical-offset="0" max-vertical-offset="603">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/double-r/src/kivyx/joystick.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1278">
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bunny.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="7" column="0" selection-start="99" selection-end="99" vertical-scroll-proportion="0.21355931" vertical-offset="0" max-vertical-offset="720">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/double-r/src/kivyx/sprite.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="21" selection-start="397" selection-end="397" vertical-scroll-proportion="0.49913344" vertical-offset="0" max-vertical-offset="1998">
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="26" column="0" selection-start="615" selection-end="615" vertical-scroll-proportion="-0.37261698" vertical-offset="683" max-vertical-offset="1260">
+          <folding>
+            <element signature="e#131#142#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>

@@ -1,4 +1,5 @@
 from functools import partial
+from kivy.properties import ObjectProperty
 
 from kivy.uix.image import Image
 from kivy.resources import resource_find
@@ -6,24 +7,28 @@ from kivy.clock import Clock
 
 
 class Sprite(Image):
-    def __init__(self, sheet, **kwargs):
+    sheet = ObjectProperty()
+
+    def __init__(self, **kwargs):
         Image.__init__(self, **kwargs)
-        self.sheet = sheet
         self._frame = None
         self.frame = 0
         self.dt = None
         self.loop_fnc = None
         self.register_event_type("on_finish")
-        
+
     @property
     def frame(self):
         return self._frame
 
     @frame.setter
     def frame(self, i):
-        if self._frame != i:
+        if self.sheet and self._frame != i:
             self.texture = self.sheet[i]
             self._frame = i
+
+    def on_sheet(self, instance, value):
+        self.frame = 0
 
     def play(self, duration=1.0, start_frame=0):
         self.frame = start_frame

@@ -1,11 +1,11 @@
 #:kivy 1.0.9
 
+#:import SpriteSheet sprite.SpriteSheet
+
 <Rabbit>:
 	size_hint: None,None
-	size: 50,50
-    Image:
-	    size_hint: 1,1
-        source: 'resources/rabbit.png'
+    Sprite:
+        sheet: SpriteSheet(source='resources/rabbit_sprite.png', rows=1, cols=5)
 
 <BunnyGame>:
     bunny: rabbit_sprite
@@ -26,7 +26,7 @@
 
     Rabbit:
         id: rabbit_sprite
-		pos_hint: {'left': 0.5, 'top': 0.50}
+		pos_hint: {'left': 0.5, 'top': 0.3}
 
     Button:
         size_hint: 1, None
