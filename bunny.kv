@@ -3,8 +3,10 @@
 #:import SpriteSheet sprite.SpriteSheet
 
 <Rabbit>:
+    sprite: sprite_id
 	size_hint: None,None
     Sprite:
+        id: sprite_id
         sheet: SpriteSheet(source='resources/rabbit_sprite.png', rows=1, cols=5)
 
 <BunnyGame>:

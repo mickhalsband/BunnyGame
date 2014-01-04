@@ -22,6 +22,12 @@ class Rabbit(BoxLayout):
     def __init__(self, **kwargs):
         super(Rabbit, self).__init__(**kwargs)
 
+    def animate(self, (x_offset, y_offset)):
+        duration = 0.1
+        Animation(x=(self.x + x_offset), y=(self.y + y_offset), duration=duration) \
+            .start(self)
+        self.sprite.play(duration=duration)
+
 
 class BunnyGame(FloatLayout):
     movement = {'left': (-10, 0), 'right': (+10, 0), 'up': (0, +10), 'down': (0, -10)}
@@ -41,16 +47,12 @@ class BunnyGame(FloatLayout):
 
         if keycode_ in ['up', 'down', 'left', 'right']:
             offsets = self.movement[keycode_]
-            self.animate_bunny(offsets)
+            self.bunny.animate(offsets)
 
         elif keycode_ == 'escape' or 'q':
             exit()
 
         return True
-
-    def animate_bunny(self, (x_offset, y_offset)):
-        a = Animation(x=(self.bunny.x + x_offset), y=(self.bunny.y + y_offset), duration=0.1)
-        a.start(self.bunny)
 
 
 class BunnyApp(App):
