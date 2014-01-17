@@ -1,4 +1,3 @@
-
 import os
 import pygame
 from pygame.locals import *
@@ -8,7 +7,7 @@ RESOURCE_DIR = 'resources'
 
 def flipy(y):
     """Small hack to convert chipmunk physics to pygame coordinates"""
-    return -y+600
+    return -y + 600
 
 
 #functions to create our resources
@@ -40,8 +39,8 @@ def load_sliced_sprites(w, h, filename):
     master_image = pygame.image.load(os.path.join(RESOURCE_DIR, filename)).convert_alpha()
 
     master_width, master_height = master_image.get_size()
-    for i in xrange(int(master_width/w)):
-        images.append(master_image.subsurface((i*w, 0, w, h)))
+    for i in xrange(int(master_width / w)):
+        images.append(master_image.subsurface((i * w, 0, w, h)))
     return images
 
 
@@ -49,6 +48,7 @@ def load_sound(name, run_path):
     class NoneSound:
         def play(self):
             pass
+
     if not pygame.mixer or not pygame.mixer.get_init():
         return NoneSound()
     basepath = os.path.join(run_path, RESOURCE_DIR)
@@ -62,12 +62,8 @@ def load_sound(name, run_path):
 
 
 class Direction:
-    none = 0
-    left = 1
-    right = 2
+    none = ''
+    left = 'left'
+    right = 'right'
 
-key2dir = {K_RIGHT: Direction.right, K_LEFT: Direction.left}
-
-
-def key_to_dir(key):
-    return key2dir.get(key, Direction.none)
+    key2dir = {left: -1, right: 1}

@@ -17,17 +17,25 @@ from kivy.core.window import Window
 
 kivy.require('1.0.7')
 
+import utils
+
 
 class Rabbit(BoxLayout):
-    movement = {'left': (-10, 0), 'right': (+10, 0), 'up': (0, +10), 'down': (0, -10)}
     duration = 0.5
+    step_size = 10
 
     def __init__(self, **kwargs):
         super(Rabbit, self).__init__(**kwargs)
+        self.direction = utils.Direction.right
 
-    def animate(self, keycode):
-        offsets = self.movement[keycode]
-        Animation(x=(self.x + offsets[0]), y=(self.y + offsets[1]), duration=self.duration) \
+    def walk(self, keycode):
+        if keycode != self.direction:
+            # flip image and step
+            self.direction = keycode
+
+        offset = utils.Direction.key2dir[self.direction] * self.step_size
+
+        Animation(x=(self.x + offset), y=self.y, duration=self.duration) \
             .start(self)
         self.sprite.play(duration=self.duration)
 
@@ -47,11 +55,14 @@ class BunnyGame(FloatLayout):
         keycode_ = keycode[1]
         print 'keycode is ' + keycode_
 
-        if keycode_ in ['up', 'down', 'left', 'right']:
-            self.bunny.animate(keycode_)
+        if keycode_ in [utils.Direction.left, utils.Direction.right]:
+            self.bunny.walk(keycode_)
 
         elif keycode_ == 'escape' or 'q':
             exit()
+
+        else:
+            pass
 
         return True
 
