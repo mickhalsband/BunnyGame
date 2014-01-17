@@ -19,18 +19,20 @@ kivy.require('1.0.7')
 
 
 class Rabbit(BoxLayout):
+    movement = {'left': (-10, 0), 'right': (+10, 0), 'up': (0, +10), 'down': (0, -10)}
+    duration = 0.5
+
     def __init__(self, **kwargs):
         super(Rabbit, self).__init__(**kwargs)
 
-    def animate(self, (x_offset, y_offset)):
-        duration = 0.1
-        Animation(x=(self.x + x_offset), y=(self.y + y_offset), duration=duration) \
+    def animate(self, keycode):
+        offsets = self.movement[keycode]
+        Animation(x=(self.x + offsets[0]), y=(self.y + offsets[1]), duration=self.duration) \
             .start(self)
-        self.sprite.play(duration=duration)
+        self.sprite.play(duration=self.duration)
 
 
 class BunnyGame(FloatLayout):
-    movement = {'left': (-10, 0), 'right': (+10, 0), 'up': (0, +10), 'down': (0, -10)}
 
     def __init__(self, **kwargs):
         super(BunnyGame, self).__init__(**kwargs)
@@ -46,8 +48,7 @@ class BunnyGame(FloatLayout):
         print 'keycode is ' + keycode_
 
         if keycode_ in ['up', 'down', 'left', 'right']:
-            offsets = self.movement[keycode_]
-            self.bunny.animate(offsets)
+            self.bunny.animate(keycode_)
 
         elif keycode_ == 'escape' or 'q':
             exit()
