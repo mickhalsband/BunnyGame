@@ -20,12 +20,12 @@ kivy.require('1.0.7')
 import utils
 
 
-class Rabbit(BoxLayout):
+class Bunny(BoxLayout):
     duration = 0.5
-    step_size = 10
+    step_size = 20
 
     def __init__(self, **kwargs):
-        super(Rabbit, self).__init__(**kwargs)
+        super(Bunny, self).__init__(**kwargs)
         self.direction = utils.Direction.right
 
     def walk(self, keycode):
@@ -37,6 +37,12 @@ class Rabbit(BoxLayout):
 
         Animation(x=(self.x + offset), y=self.y, duration=self.duration) \
             .start(self)
+        self.sprite.play(duration=self.duration)
+
+    def jump(self):
+        # Animation(pos=(self.x, self.y-100)).start(self)
+        # self.sprite.play(duration=self.duration)
+        Animation(x=self.x + 10, y=self.y + 10).start(self)
         self.sprite.play(duration=self.duration)
 
 
@@ -52,13 +58,16 @@ class BunnyGame(FloatLayout):
         self._keyboard = None
 
     def _on_keyboard_down(self, keyboard, keycode, text, modifiers):
-        keycode_ = keycode[1]
-        print 'keycode is ' + keycode_
+        curr_keycode = keycode[1]
+        print 'keycode is ' + curr_keycode
 
-        if keycode_ in [utils.Direction.left, utils.Direction.right]:
-            self.bunny.walk(keycode_)
+        if curr_keycode in [utils.Direction.left, utils.Direction.right]:
+            self.bunny.walk(curr_keycode)
 
-        elif keycode_ == 'escape' or 'q':
+        elif curr_keycode in ['up', 'spacebar']:
+            self.bunny.jump()
+
+        elif curr_keycode == 'escape' or 'q':
             exit()
 
         else:

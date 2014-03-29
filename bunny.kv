@@ -2,15 +2,8 @@
 
 #:import SpriteSheet sprite.SpriteSheet
 
-<Rabbit>:
-    sprite: sprite_id
-	size_hint: None,None
-    Sprite:
-        id: sprite_id
-        sheet: SpriteSheet(source='resources/rabbit_sprite.png', rows=1, cols=5)
-
 <BunnyGame>:
-    bunny: rabbit_sprite
+    bunny: bunny_id
     size: 800, 600
 
     canvas.before:
@@ -20,17 +13,24 @@
     	    size: self.size
 	        pos: self.pos
 			source: 'resources/background_far.png'
-            
+
     Label:
-        font_size: 70  
+        font_size: 70
 		pos_hint: {'center_x': 0.5 }
         text: "Bunny Game"
 
-    Rabbit:
-        id: rabbit_sprite
+    Bunny:
+        id: bunny_id
 		pos_hint: {'left': 0.5, 'top': 0.3}
 
     Button:
         size_hint: 1, None
         pos_hint: {'bottom': 0 }
-        on_press: root.animate_bunny(10)
+        on_press: root.bunny.walk('right')
+
+<Bunny>:
+    sprite: sprite_id
+	size_hint: None,None
+    Sprite:
+        id: sprite_id
+        sheet: SpriteSheet(source='resources/rabbit_sprite.png', rows=1, cols=5)
