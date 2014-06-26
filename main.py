@@ -11,9 +11,9 @@ import kivy
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 
-from kivy.uix.floatlayout import FloatLayout
 from kivy.animation import Animation
 from kivy.core.window import Window
+from kivy.uix.relativelayout import RelativeLayout
 
 kivy.require('1.0.7')
 
@@ -42,12 +42,12 @@ class Bunny(BoxLayout):
     def jump(self):
         # Animation(pos=(self.x, self.y-100)).start(self)
         # self.sprite.play(duration=self.duration)
-        Animation(x=self.x + 10, y=self.y + 10).start(self)
+        Animation(x=self.x + 10, y=self.y + 10, duration=self.duration) \
+            .start(self)
         self.sprite.play(duration=self.duration)
 
 
-class BunnyGame(FloatLayout):
-
+class BunnyGame(RelativeLayout):
     def __init__(self, **kwargs):
         super(BunnyGame, self).__init__(**kwargs)
         self._keyboard = Window.request_keyboard(self._keyboard_closed, self)

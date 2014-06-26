@@ -4,29 +4,23 @@
 
 <BunnyGame>:
     bunny: bunny_id
+
     size: 800, 600
 
     canvas.before:
-    #Color:
-    #    rgba: 1, 1, 1, 1
-	    Rectangle:
-    	    size: self.size
-	        pos: self.pos
-			source: 'resources/background_far.png'
+        Rectangle:
+            size: self.size
+            pos: self.pos
+            source: 'resources/background_far.png'
 
     Label:
         font_size: 70
-		pos_hint: {'center_x': 0.5 }
+        pos_hint: {'center_x': 0.5 }
         text: "Bunny Game"
 
     Bunny:
         id: bunny_id
-		pos_hint: {'left': 0.5, 'top': 0.3}
-
-    Button:
-        size_hint: 1, None
-        pos_hint: {'bottom': 0 }
-        on_press: root.bunny.walk('right')
+        pos: 0, 0
 
 <Bunny>:
     sprite: sprite_id
