@@ -42,8 +42,9 @@ class Bunny(BoxLayout):
     def jump(self):
         # Animation(pos=(self.x, self.y-100)).start(self)
         # self.sprite.play(duration=self.duration)
-        Animation(x=self.x + 10, y=self.y + 10, duration=self.duration) \
-            .start(self)
+        anim = Animation(x=self.x + 15, y=self.y + 25, d=self.duration, t='in_sine') + \
+               Animation(x=self.x + 30, y=self.y, d=self.duration, t='out_sine')
+        anim.start(self)
         self.sprite.play(duration=self.duration)
 
 
