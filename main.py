@@ -9,7 +9,9 @@ widget.
 import kivy
 
 from kivy.app import App
-from kivy.uix.boxlayout import BoxLayout
+from kivy.logger import Logger
+from kivy.properties import OptionProperty, NumericProperty, StringProperty
+from kivy.uix.image import Image
 
 from kivy.animation import Animation
 from kivy.core.window import Window
@@ -20,32 +22,40 @@ kivy.require('1.0.7')
 import utils
 
 
-class Bunny(BoxLayout):
-    duration = 0.5
+class Sprite(Image):
     step_size = 20
+    atlas = StringProperty('')
+    direction = OptionProperty('right', options=('right', 'left'))
+    frame = NumericProperty(1)  # maybe specify min/max
+    duration = 0.5
 
     def __init__(self, **kwargs):
-        super(Bunny, self).__init__(**kwargs)
-        self.direction = utils.Direction.right
+        super(Sprite, self).__init__(**kwargs)
+        self.atlas = self.__class__.__name__.lower()
 
-    def walk(self, keycode):
+    def animate(self, keycode):
         if keycode != self.direction:
             # flip image and step
             self.direction = keycode
 
         offset = utils.Direction.key2dir[self.direction] * self.step_size
+        Animation.cancel_all(self)
+        self.frame = 1
+        Animation(x=(self.x + offset), y=self.y, frame=5, d=self.duration).start(self)
+#
+#     def jump(self):
+#         anim = Animation(x=self.x + 15, y=self.y + 25, d=self.duration, t='in_sine') + \
+#                Animation(x=self.x + 30, y=self.y, d=self.duration, t='out_sine')
+#         anim.start(self)
+#         self.sprite.play(duration=self.duration)
 
-        Animation(x=(self.x + offset), y=self.y, duration=self.duration) \
-            .start(self)
-        self.sprite.play(duration=self.duration)
 
-    def jump(self):
-        # Animation(pos=(self.x, self.y-100)).start(self)
-        # self.sprite.play(duration=self.duration)
-        anim = Animation(x=self.x + 15, y=self.y + 25, d=self.duration, t='in_sine') + \
-               Animation(x=self.x + 30, y=self.y, d=self.duration, t='out_sine')
-        anim.start(self)
-        self.sprite.play(duration=self.duration)
+class Bunny(Sprite):
+    def __init__(self, **kwargs):
+        super(Bunny, self).__init__(**kwargs)
+
+    def walk(self, keycode):
+        self.animate(keycode)
 
 
 class BunnyGame(RelativeLayout):

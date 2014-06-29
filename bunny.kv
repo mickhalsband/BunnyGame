@@ -1,6 +1,7 @@
 #:kivy 1.0.9
 
-#:import SpriteSheet sprite.SpriteSheet
+#:import Logger kivy.logger.Logger
+
 
 <BunnyGame>:
     bunny: bunny_id
@@ -22,9 +23,10 @@
         id: bunny_id
         pos: 0, 0
 
+
+<Sprite>:
+    size_hint: None, None
+    size: self.texture_size
+    source: 'atlas://resources/%s/%s_%02d' % (self.atlas, self.direction, self.frame)
+
 <Bunny>:
-    sprite: sprite_id
-	size_hint: None,None
-    Sprite:
-        id: sprite_id
-        sheet: SpriteSheet(source='resources/rabbit_sprite.png', rows=1, cols=5)
