@@ -9,6 +9,7 @@ widget.
 import kivy
 
 from kivy.app import App
+from kivy.clock import Clock
 from kivy.logger import Logger
 from kivy.properties import OptionProperty, NumericProperty, StringProperty
 from kivy.uix.image import Image
@@ -28,10 +29,19 @@ class Sprite(Image):
     direction = OptionProperty('right', options=('right', 'left'))
     frame = NumericProperty(1)  # maybe specify min/max
     duration = 0.5
+    frame_count = 5
 
     def __init__(self, **kwargs):
         super(Sprite, self).__init__(**kwargs)
         self.atlas = self.__class__.__name__.lower()
+
+    def _schedule_frame(self):
+        Clock.schedule_once(self._advance_frame, self.duration / self.frame_count)
+
+    def _advance_frame(self, *args):
+        self.frame += 1
+        if self.frame < self.frame_count:
+            self._schedule_frame()
 
     def animate(self, keycode):
         if keycode != self.direction:
@@ -40,8 +50,11 @@ class Sprite(Image):
 
         offset = utils.Direction.key2dir[self.direction] * self.step_size
         Animation.cancel_all(self)
+        Clock.unschedule(self._advance_frame)
         self.frame = 1
-        Animation(x=(self.x + offset), y=self.y, frame=5, d=self.duration).start(self)
+        Animation(x=(self.x + offset), y=self.y, d=self.duration).start(self)
+        self._schedule_frame()
+
 #
 #     def jump(self):
 #         anim = Animation(x=self.x + 15, y=self.y + 25, d=self.duration, t='in_sine') + \
