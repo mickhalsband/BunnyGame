@@ -1,4 +1,7 @@
+#!/usr/local/bin/kivy
+
 import kivy
+import sys
 
 kivy.require('1.7.1')
 
@@ -7,15 +10,20 @@ from os import walk, chdir
 from glob import glob
 from kivy.atlas import Atlas
 
-DEFAULT_SIZE = 512
-FOLDER_MASK = '*'
 
-"""
-this parses sub-directories in cwd and creates the kivy:atlas compliant stuff
-"""
-def create_atlas(argv=None):
+def create_atlas(args):
+    ''' Parse sub-directories in src and creates the kivy:atlas compliant stuff in dst
+    '''
     try:
-        for folder in list(abspath(f) for f in glob(FOLDER_MASK)):
+        src = args.src or '.'
+        dst = args.dst or '..'
+
+        if not isdir(src):
+            raise Exception('source `%s` is not a directory!' % src)
+        if not isdir(dst):
+            raise Exception('destination `%s` is not a directory' % dst)
+
+        for folder in list(abspath(f) for f in glob(join(src, '*'))):
             if not isdir(folder):
                 print 'skipping %s (not a folder)' % folder
             continue
@@ -30,11 +38,25 @@ def create_atlas(argv=None):
                 images.append(image)
 
         chdir(folder)
-        Atlas.create(join('..', basename(folder)), images, DEFAULT_SIZE, use_path=True)
+        Atlas.create(join(dst, basename(folder)), images, args.size, use_path=True)
 
     except Exception, e:
         print e
 
 
+def main(argv=None):
+    from argparse import ArgumentParser
+
+    argv = argv or sys.argv
+
+    parser = ArgumentParser(description='Create kivy atlases')
+    parser.add_argument('--dst', help='destination')
+    parser.add_argument('--src', help='source folder (where atlas sub-folders reside)')
+    parser.add_argument('--size', type=int, default=512, help='atlas texture size')
+    args = parser.parse_args(argv[1:])
+
+    create_atlas(args)
+
 if __name__ in '__main__':
-    create_atlas()
+    main()
+
