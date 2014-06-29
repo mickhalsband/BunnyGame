@@ -26,8 +26,8 @@ import utils
 class Sprite(Image):
     step_size = 20
     atlas = StringProperty('')
-    direction = OptionProperty('right', options=('right', 'left'))
     frame = NumericProperty(1)  # maybe specify min/max
+    resource = StringProperty()
     duration = 0.5
     frame_count = 5
 
@@ -43,32 +43,35 @@ class Sprite(Image):
         if self.frame < self.frame_count:
             self._schedule_frame()
 
-    def animate(self, keycode):
-        if keycode != self.direction:
-            # flip image and step
-            self.direction = keycode
-
-        offset = utils.Direction.key2dir[self.direction] * self.step_size
-        Animation.cancel_all(self)
+    def animate(self, resource):
+        self.resource = resource
         Clock.unschedule(self._advance_frame)
         self.frame = 1
-        Animation(x=(self.x + offset), y=self.y, d=self.duration).start(self)
         self._schedule_frame()
-
-#
-#     def jump(self):
-#         anim = Animation(x=self.x + 15, y=self.y + 25, d=self.duration, t='in_sine') + \
-#                Animation(x=self.x + 30, y=self.y, d=self.duration, t='out_sine')
-#         anim.start(self)
-#         self.sprite.play(duration=self.duration)
 
 
 class Bunny(Sprite):
+    direction = OptionProperty('right', options=('right', 'left'))
+
     def __init__(self, **kwargs):
         super(Bunny, self).__init__(**kwargs)
+        self.resource = self.direction
 
     def walk(self, keycode):
-        self.animate(keycode)
+        if keycode != self.direction:
+            # flip image and step
+            self.direction = keycode
+        self.animate(self.direction)
+        offset = utils.Direction.key2dir[self.direction] * self.step_size
+        Animation.cancel_all(self)
+        Animation(x=(self.x + offset), y=self.y, d=self.duration).start(self)
+
+    def jump(self):
+        self.animate('right')
+        Animation.cancel_all(self)
+        anim = Animation(x=self.x + 15, y=self.y + 25, d=self.duration/2, t='in_sine') + \
+               Animation(x=self.x + 30, y=self.y, d=self.duration/2, t='out_sine')
+        anim.start(self)
 
 
 class BunnyGame(RelativeLayout):

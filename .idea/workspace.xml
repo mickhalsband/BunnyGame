@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fbf5e4ed-655e-434d-b723-ffc8ec4886ef" name="Default" comment="Draft a jump method, doesn't work yet...">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bunny.kv" afterPath="$PROJECT_DIR$/bunny.kv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="KivyGame.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,7 +32,7 @@
           <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="57" column="0" selection-start="1555" selection-end="1555" vertical-scroll-proportion="0.7557252" vertical-offset="360" max-vertical-offset="1725">
+                <state line="45" column="32" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.33587787" vertical-offset="455" max-vertical-offset="1770">
                   <folding>
                     <element signature="e#131#142#0" expanded="true" />
                   </folding>
@@ -45,7 +47,7 @@
           <file leaf-file-name="bunny.kv" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/bunny.kv">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="29" column="34" selection-start="497" selection-end="497" vertical-scroll-proportion="0.66412216" vertical-offset="0" max-vertical-offset="655">
+                <state line="29" column="71" selection-start="534" selection-end="534" vertical-scroll-proportion="0.66412216" vertical-offset="0" max-vertical-offset="655">
                   <folding />
                 </state>
               </provider>
@@ -414,7 +416,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32888147" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21281464" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15253334" sideWeight="0.7947826" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15253334" sideWeight="0.7947826" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23798627" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -572,13 +574,6 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="945" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bunny.kv">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="34" selection-start="497" selection-end="497" vertical-scroll-proportion="0.66412216" vertical-offset="0" max-vertical-offset="655">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="65" column="4" selection-start="1794" selection-end="1794" vertical-scroll-proportion="1.4427481" vertical-offset="0" max-vertical-offset="1080">
@@ -602,9 +597,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/bunny.kv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="29" column="71" selection-start="534" selection-end="534" vertical-scroll-proportion="0.66412216" vertical-offset="0" max-vertical-offset="655">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="57" column="0" selection-start="1555" selection-end="1555" vertical-scroll-proportion="0.7557252" vertical-offset="360" max-vertical-offset="1725">
+        <state line="45" column="32" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.33587787" vertical-offset="455" max-vertical-offset="1770">
           <folding>
             <element signature="e#131#142#0" expanded="true" />
           </folding>
