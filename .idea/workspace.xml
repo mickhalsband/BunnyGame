@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="fbf5e4ed-655e-434d-b723-ffc8ec4886ef" name="Default" comment="Draft a jump method, doesn't work yet...">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bunny.kv" afterPath="$PROJECT_DIR$/bunny.kv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/raw_resources/bunny/left_01.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/raw_resources/bunny/left_02.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/raw_resources/bunny/left_03.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/raw_resources/bunny/left_04.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/raw_resources/bunny/left_05.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/tools/__init__.py" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/tools.py" afterPath="$PROJECT_DIR$/tools/tools.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/bunny-0.png" afterPath="$PROJECT_DIR$/resources/bunny-0.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/bunny.atlas" afterPath="$PROJECT_DIR$/resources/bunny.atlas" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="KivyGame.iws" />
@@ -26,36 +33,44 @@
     <favorites_list name="KivyGame" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf>
-          <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/main.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="45" column="32" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.33587787" vertical-offset="455" max-vertical-offset="1770">
-                  <folding>
-                    <element signature="e#131#142#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="bunny.kv" pinned="false" current="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/bunny.kv">
-              <provider selected="true" editor-type-id="text-editor">
-                <state line="29" column="71" selection-start="534" selection-end="534" vertical-scroll-proportion="0.66412216" vertical-offset="0" max-vertical-offset="655">
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf>
+      <file leaf-file-name="main.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="45" column="32" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.0" vertical-offset="410" max-vertical-offset="1770">
+              <folding>
+                <element signature="e#131#142#0" expanded="true" />
+                <marker date="1404052262000" expanded="true" signature="522:1255" placeholder="..." />
+                <marker date="1404052262000" expanded="true" signature="866:949" placeholder="..." />
+                <marker date="1404052262000" expanded="true" signature="1122:1255" placeholder="..." />
+                <marker date="1404052262000" expanded="true" signature="1278:2113" placeholder="..." />
+                <marker date="1404052262000" expanded="true" signature="1380:1465" placeholder="..." />
+                <marker date="1404052262000" expanded="true" signature="1495:1828" placeholder="..." />
+                <marker date="1404052262000" expanded="true" signature="1849:2113" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bunny.kv" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bunny.kv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="29" column="71" selection-start="534" selection-end="534" vertical-scroll-proportion="0.0" vertical-offset="101" max-vertical-offset="570">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/tools/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0390625" vertical-offset="0" max-vertical-offset="384">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -89,10 +104,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="17" />
-    <option name="y" value="29" />
-    <option name="width" value="1896" />
-    <option name="height" value="964" />
+    <option name="x" value="6" />
+    <option name="y" value="22" />
+    <option name="width" value="1248" />
+    <option name="height" value="693" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -148,7 +163,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
+              <option name="myItemId" value="tools" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -174,6 +189,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/tools" />
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
@@ -408,7 +424,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="17" y="29" width="1896" height="964" extended-state="0" />
+    <frame x="6" y="22" width="1248" height="693" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15675057" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" x="0" y="494" width="1897" height="280" />
@@ -416,11 +432,11 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32888147" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.21281464" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.15253334" sideWeight="0.7947826" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23308884" sideWeight="0.7947826" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23798627" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21853547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31674957" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32554257" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -467,6 +483,13 @@
         <state line="45" column="56" selection-start="1203" selection-end="1203" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1275">
           <folding>
             <element signature="e#131#142#0" expanded="true" />
+            <marker date="1404052262000" expanded="true" signature="522:1255" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="866:949" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1122:1255" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1278:2113" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1380:1465" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1495:1828" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1849:2113" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -476,6 +499,13 @@
         <state line="50" column="32" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1365">
           <folding>
             <element signature="e#131#142#0" expanded="true" />
+            <marker date="1404052262000" expanded="true" signature="522:1255" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="866:949" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1122:1255" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1278:2113" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1380:1465" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1495:1828" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1849:2113" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -492,6 +522,13 @@
         <state line="50" column="32" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.0" vertical-offset="750" max-vertical-offset="1365">
           <folding>
             <element signature="e#131#142#0" expanded="true" />
+            <marker date="1404052262000" expanded="true" signature="522:1255" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="866:949" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1122:1255" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1278:2113" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1380:1465" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1495:1828" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1849:2113" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -508,6 +545,13 @@
         <state line="72" column="13" selection-start="1973" selection-end="1973" vertical-scroll-proportion="0.0" vertical-offset="975" max-vertical-offset="1260">
           <folding>
             <element signature="e#131#142#0" expanded="true" />
+            <marker date="1404052262000" expanded="true" signature="522:1255" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="866:949" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1122:1255" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1278:2113" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1380:1465" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1495:1828" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1849:2113" placeholder="..." />
           </folding>
         </state>
       </provider>
@@ -581,11 +625,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tools.py">
+    <entry file="file://$PROJECT_DIR$/tools/tools.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="13" selection-start="601" selection-end="601" vertical-scroll-proportion="0.58411217" vertical-offset="0" max-vertical-offset="1020">
           <folding>
-            <element signature="e#23#34#0" expanded="true" />
+            <element signature="e#23#34#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -597,19 +641,33 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="45" column="32" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.0" vertical-offset="410" max-vertical-offset="1770">
+          <folding>
+            <element signature="e#131#142#0" expanded="true" />
+            <marker date="1404052262000" expanded="true" signature="522:1255" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="866:949" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1122:1255" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1278:2113" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1380:1465" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1495:1828" placeholder="..." />
+            <marker date="1404052262000" expanded="true" signature="1849:2113" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/bunny.kv">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="71" selection-start="534" selection-end="534" vertical-scroll-proportion="0.66412216" vertical-offset="0" max-vertical-offset="655">
+        <state line="29" column="71" selection-start="534" selection-end="534" vertical-scroll-proportion="0.0" vertical-offset="101" max-vertical-offset="570">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/tools/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="32" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.33587787" vertical-offset="455" max-vertical-offset="1770">
-          <folding>
-            <element signature="e#131#142#0" expanded="true" />
-          </folding>
+        <state line="1" column="0" selection-start="20" selection-end="20" vertical-scroll-proportion="0.0390625" vertical-offset="0" max-vertical-offset="384">
+          <folding />
         </state>
       </provider>
     </entry>
