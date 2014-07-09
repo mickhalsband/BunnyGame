@@ -10,7 +10,6 @@ import kivy
 
 from kivy.app import App
 from kivy.clock import Clock
-from kivy.logger import Logger
 from kivy.properties import OptionProperty, NumericProperty, StringProperty
 from kivy.uix.image import Image
 
@@ -67,10 +66,11 @@ class Bunny(Sprite):
         Animation(x=(self.x + offset), y=self.y, d=self.duration).start(self)
 
     def jump(self):
-        self.animate('right')
+        self.animate(self.direction)
         Animation.cancel_all(self)
-        anim = Animation(x=self.x + 15, y=self.y + 25, d=self.duration/2, t='in_sine') + \
-               Animation(x=self.x + 30, y=self.y, d=self.duration/2, t='out_sine')
+        dir_sign = utils.Direction.key2dir[self.direction]
+        anim = Animation(x=self.x + (15 * dir_sign), y=self.y + 25, d=self.duration / 2, t='in_sine') + \
+               Animation(x=self.x + (30 * dir_sign), y=self.y, d=self.duration / 2, t='out_sine')
         anim.start(self)
 
 
