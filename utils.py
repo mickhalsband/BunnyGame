@@ -27,23 +27,6 @@ def load_image(name, run_path, colorkey=None):
     return image
 
 
-def load_sliced_sprites(w, h, filename):
-    '''
-    Specs :
-        Master can be any height.
-        Sprites frames width must be the same width
-        Master width must be len(frames)*frame.width
-        Assuming you ressources directory is named "resources"
-    '''
-    images = []
-    master_image = pygame.image.load(os.path.join(RESOURCE_DIR, filename)).convert_alpha()
-
-    master_width, master_height = master_image.get_size()
-    for i in xrange(int(master_width / w)):
-        images.append(master_image.subsurface((i * w, 0, w, h)))
-    return images
-
-
 def load_sound(name, run_path):
     class NoneSound:
         def play(self):
